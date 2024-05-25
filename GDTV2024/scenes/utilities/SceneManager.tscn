@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://ex0gw8xtoeid"]
+
+[ext_resource type="Script" path="res://scripts/utilities/scenemanager.gd" id="1_tefrd"]
+
+[node name="SceneManager" type="Node"]
+script = ExtResource("1_tefrd")
+Scenes = {
+"Credits": &"res://scenes/credits.tscn",
+"Ending": &"res://scenes/ending.tscn",
+"Intro": &"res://scenes/intro.tscn",
+"MainMenu": &"res://scenes/main_menu.tscn",
+"Store": &"res://scenes/store.tscn"
+}

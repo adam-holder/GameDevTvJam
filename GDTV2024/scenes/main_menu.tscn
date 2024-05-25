@@ -1,0 +1,70 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkbgdw38xisbg"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_8fjil"]
+
+[sub_resource type="Gradient" id="Gradient_4pdqa"]
+offsets = PackedFloat32Array(0, 0.528474, 0.530752, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.192172, 0.192172, 0.192172, 1, 0.198178, 0.198178, 0.198178, 1, 0.404511, 0.404511, 0.404511, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0ij70"]
+gradient = SubResource("Gradient_4pdqa")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 0)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8fjil")
+
+[node name="PlaceholderBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_0ij70")
+
+[node name="ButtonContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -171.0
+offset_right = 48.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="NewGame" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+text = "New Game"
+
+[node name="LoadGame" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+text = "Load Game"
+
+[node name="Settings" type="Button" parent="ButtonContainer"]
+visible = false
+layout_mode = 2
+text = "Settings"
+
+[node name="Credits" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+text = "Credits"
+
+[node name="Quit" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="ButtonContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="ButtonContainer/LoadGame" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="ButtonContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="ButtonContainer/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="ButtonContainer/Quit" to="." method="_on_quit_pressed"]

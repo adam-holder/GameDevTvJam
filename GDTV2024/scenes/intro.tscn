@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr67nbj0vkhc8"]
+
+[ext_resource type="Script" path="res://scripts/intro.gd" id="1_pc5i4"]
+
+[node name="Intro" type="Node2D"]
+script = ExtResource("1_pc5i4")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 503.0
+offset_top = 300.0
+offset_right = 661.0
+offset_bottom = 323.0
+text = "Intro stuff goes here"
+
+[node name="Button" type="Button" parent="."]
+offset_left = 530.0
+offset_top = 348.0
+offset_right = 625.0
+offset_bottom = 379.0
+text = "Go to Store"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
