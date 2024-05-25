@@ -14,7 +14,7 @@ extends Node2D
 
 var money: int
 var resources: int
-var day: int = 1
+var day: int = 0
 var time: String = times[0]
 var payed: int
 var day_favorite: String
@@ -40,34 +40,66 @@ func _process(delta):
 	
 
 func morning_phase():
-	if day == 1: 
-		pass
-	elif day == 2:
-		pass
-	else:
+	time = times[0]
+	hud.change_value("time",time)
+	day += 1
+	hud.change_value("day",1)
+	if day < total_days:
+		if day == 1: 
+			pass
+		elif day == 2:
+			pass
+		else:
+			pass
+	else: #FINAL DAY
 		pass
 
 func afternoon_phase():
-	if day == 1:
-		pass
-	elif day == 2:
-		pass
-	else:
+	time = times[1]
+	hud.change_value("time",time)
+	if day < total_days:
+		if day == 1:
+			pass
+		elif day == 2:
+			pass
+		else:
+			pass
+	else: #FINAL DAY
 		pass
 	
 func evening_phase():
-	if day == 1:
-		pass
-	elif day == 2:
-		pass
-	else:
-		pass
+	time = times[2]
+	hud.change_value("time",time)
+	if day < total_days:
+		if day == 1:
+			pass
+		elif day == 2:
+			pass
+		else:
+			pass
+	else: #FINAL DAY
+		if payed >= total_owed:
+			ending("good")
+		else:
+			ending("bad")
 
 func _on_button_pressed():
 	#SceneManager.SwitchScene("Ending")
-	set_day_favorite_type()
+	#set_day_favorite_type()
+	if time == times[0]:
+		afternoon_phase()
+	elif time == times[1]:
+		evening_phase()
+	elif time == times[2]:
+		morning_phase()
 
 func set_day_favorite_type():
 	day_favorite = item_types.pick_random()
 	print("day favorite set to "+day_favorite)
 	hud.select_announcement(day_favorite)
+
+func ending(type):
+	if type == "good":
+		SceneManager.SwitchScene("Ending")
+	if type == "bad":
+		SceneManager.SwitchScene("Ending")
