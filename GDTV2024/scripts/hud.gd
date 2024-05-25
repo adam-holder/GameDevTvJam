@@ -7,17 +7,21 @@ extends Control
 @onready var owed_amt = $Funds/LabelContainer/Owed/OwedAmt
 @onready var broadcast_text = $Broadcast/BroadcastText
 @onready var broadcast = $Broadcast
+@onready var pause_screen = $PauseScreen
 
-@export var scroll_speed: int = 100
-
-var times: Array = ["Morning","Afternoon","Night"]
+@export var scroll_speed: int = 500
+var paused: bool = false
 
 var day: int:
 	set(day_num):
 		day = day_num
 		print("day was changed")
-		day_count.text = str(day)
-var time: String = times[0]
+		day_count.text = "Day "+str(day)+","
+var time: String:
+	set(time_str):
+		time = time_str
+		print("time was changed")
+		current_time.text = str(time)
 var money: int:
 	set(m_amt):
 		money = m_amt
@@ -79,15 +83,29 @@ func _ready():
 	money_amt.text = str(money)
 	resources_amt.text = str(resources)
 	owed_amt.text = str(payed)+'/'+str(total_owed)
-	var atype: Array = ["Weapon","Valuable","Meds","Books","Food"]#PLACEHOLDER -- REMOVE
-	select_announcement(atype.pick_random())#PLACEHOLDER -- REMOVE
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-	if broadcast.visible && broadcast_text.position.x > -broadcast_text.size.x:
-		broadcast_text.position.x -= scroll_speed * delta #TODO: fix jitter & account for text longer than the textbox size
+	if broadcast.visible && broadcast_text.position.x > -broadcast_text.size.x && !paused:
+		broadcast_text.position.x = lerp(broadcast_text.position.x,broadcast_text.position.x - scroll_speed * delta,0.25 )
+	if broadcast.visible && broadcast_text.position.x <= -broadcast_text.size.x:
+		broadcast.visible = false
+		#TODO: fix jitter & account for text longer than the textbox size
+
+func _input(event):
+	#putting this here so we can set HUD to Always process and leave Store at Inherit
+	#this lets us unpause after pausing (theoretically)
+	#TODO: figure out why pause doesn't pause announcement scroll despite Broadcast & children being set to pausable
+	if event.is_action_pressed("ui_cancel"):
+		SceneManager.PauseGame()
+		if pause_screen.visible:
+			paused = false
+			pause_screen.visible = false
+		else:
+			pause_screen.visible = true
+			paused = true
 	
 func select_announcement(type):
 	if type == "Weapon":
@@ -103,11 +121,12 @@ func select_announcement(type):
 	else:
 		broadcast_text.text = "ERROR: INCORRECT TYPE PASSED"
 		print("ERROR: INCORRECT TYPE PASSED")
+	broadcast.visible = true
 
 func change_value(change_type,amt):
 	if change_type == "total":
 		total_owed = amt
-	if change_type == "owed":
+	if change_type == "payment":
 		payed += amt
 	if change_type == "money":
 		money += amt
@@ -116,4 +135,4 @@ func change_value(change_type,amt):
 	if change_type == "day":
 		day += amt
 	if change_type == "time":
-		time = times[amt]
+		time = amt

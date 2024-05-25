@@ -6,6 +6,11 @@
 [node name="Store" type="Node2D"]
 script = ExtResource("1_4gbnj")
 
+[node name="HUD" parent="." instance=ExtResource("2_m17yu")]
+z_index = 99
+offset_right = 1152.0
+offset_bottom = 648.0
+
 [node name="Label" type="Label" parent="."]
 offset_left = 459.0
 offset_top = 291.0
@@ -18,10 +23,6 @@ offset_left = 517.0
 offset_top = 333.0
 offset_right = 604.0
 offset_bottom = 364.0
-text = "End Game"
-
-[node name="HUD" parent="." instance=ExtResource("2_m17yu")]
-offset_right = 1152.0
-offset_bottom = 648.0
+text = "Test Button"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
