@@ -1,0 +1,119 @@
+extends Control
+
+@onready var day_count = $Datetime/Day
+@onready var current_time = $Datetime/Time
+@onready var money_amt = $Funds/LabelContainer/Money/MoneyAmt
+@onready var resources_amt = $Funds/LabelContainer/Resources/ResourcesAmt
+@onready var owed_amt = $Funds/LabelContainer/Owed/OwedAmt
+@onready var broadcast_text = $Broadcast/BroadcastText
+@onready var broadcast = $Broadcast
+
+@export var scroll_speed: int = 100
+
+var times: Array = ["Morning","Afternoon","Night"]
+
+var day: int:
+	set(day_num):
+		day = day_num
+		print("day was changed")
+		day_count.text = str(day)
+var time: String = times[0]
+var money: int:
+	set(m_amt):
+		money = m_amt
+		print("money was changed")
+		money_amt.text = str(money)
+var resources: int:
+	set(r_amt):
+		resources = r_amt
+		print("resouces was changed")
+		resources_amt.text = str(resources)
+var payed: int:
+	set(p_amt):
+		payed = p_amt
+		print("payment was changed")
+		owed_amt.text = str(payed)+'/'+str(total_owed)
+var total_owed: int:
+	set(total):
+		total_owed = total
+		print("total was changed")
+		owed_amt.text = str(payed)+'/'+str(total_owed)
+var announcment_type : String = ""
+
+var weapon_announcements: Array = [
+	"weapon phrase 0",
+	"weapon phrase 1",
+	"weapon phrase 2",
+	"weapon phrase 3",
+	"weapon phrase 4"]
+var valuable_announcements: Array = [
+	"valuable phrase 0",
+	"valuable phrase 1",
+	"valuable phrase 2",
+	"valuable phrase 3",
+	"valuable phrase 4"]
+var meds_announcements: Array = [
+	"meds phrase 0",
+	"meds phrase 1",
+	"meds phrase 2",
+	"meds phrase 3",
+	"meds phrase 4"]
+var book_announcements: Array = [
+	"book phrase 0",
+	"book phrase 1",
+	"book phrase 2",
+	"book phrase 3",
+	"book phrase 4"]
+var food_announcements: Array = [
+	"food phrase 0",
+	"food phrase 1",
+	"food phrase 2",
+	"food phrase 3",
+	"food phrase 4"]
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	day_count.text = 'Day '+str(day)+','
+	current_time.text = time
+	money_amt.text = str(money)
+	resources_amt.text = str(resources)
+	owed_amt.text = str(payed)+'/'+str(total_owed)
+	var atype: Array = ["Weapon","Valuable","Meds","Books","Food"]#PLACEHOLDER -- REMOVE
+	select_announcement(atype.pick_random())#PLACEHOLDER -- REMOVE
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+	if broadcast.visible && broadcast_text.position.x > -broadcast_text.size.x:
+		broadcast_text.position.x -= scroll_speed * delta #TODO: fix jitter & account for text longer than the textbox size
+	
+func select_announcement(type):
+	if type == "Weapon":
+		broadcast_text.text = weapon_announcements.pick_random()
+	elif type == "Valuable":
+		broadcast_text.text = valuable_announcements.pick_random()
+	elif type == "Meds":
+		broadcast_text.text = meds_announcements.pick_random()
+	elif type == "Books":
+		broadcast_text.text = book_announcements.pick_random()
+	elif type == "Food":
+		broadcast_text.text = food_announcements.pick_random()
+	else:
+		broadcast_text.text = "ERROR: INCORRECT TYPE PASSED"
+		print("ERROR: INCORRECT TYPE PASSED")
+
+func change_value(change_type,amt):
+	if change_type == "total":
+		total_owed = amt
+	if change_type == "owed":
+		payed += amt
+	if change_type == "money":
+		money += amt
+	if change_type == "resources":
+		resources += amt
+	if change_type == "day":
+		day += amt
+	if change_type == "time":
+		time = times[amt]

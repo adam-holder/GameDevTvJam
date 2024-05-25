@@ -1,0 +1,136 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1os340hnr1fo"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_7tsaj"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7tsaj")
+
+[node name="Datetime" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -182.0
+offset_bottom = 29.0
+grow_horizontal = 0
+
+[node name="Background" type="ColorRect" parent="Datetime"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(7.31587e-05, 0.539619, 0.947246, 1)
+
+[node name="Day" type="Label" parent="Datetime"]
+layout_mode = 0
+offset_right = 83.0
+offset_bottom = 23.0
+text = "Day 999,"
+horizontal_alignment = 2
+
+[node name="Time" type="Label" parent="Datetime"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -94.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "Afternoon"
+
+[node name="Funds" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 254.0
+offset_bottom = 83.0
+
+[node name="Background" type="ColorRect" parent="Funds"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(7.31587e-05, 0.539619, 0.947246, 1)
+
+[node name="LabelContainer" type="VBoxContainer" parent="Funds"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Money" type="HBoxContainer" parent="Funds/LabelContainer"]
+layout_mode = 2
+
+[node name="MoneyLabel" type="Label" parent="Funds/LabelContainer/Money"]
+layout_mode = 2
+text = "Gold:"
+
+[node name="MoneyAmt" type="Label" parent="Funds/LabelContainer/Money"]
+layout_mode = 2
+text = "999,999,999"
+
+[node name="Resources" type="HBoxContainer" parent="Funds/LabelContainer"]
+layout_mode = 2
+
+[node name="ResourcesLabel" type="Label" parent="Funds/LabelContainer/Resources"]
+layout_mode = 2
+text = "Materials:
+"
+
+[node name="ResourcesAmt" type="Label" parent="Funds/LabelContainer/Resources"]
+layout_mode = 2
+text = "999,999,999"
+
+[node name="Owed" type="HBoxContainer" parent="Funds/LabelContainer"]
+layout_mode = 2
+
+[node name="OwedLabel" type="Label" parent="Funds/LabelContainer/Owed"]
+layout_mode = 2
+text = "Owed:"
+
+[node name="OwedAmt" type="Label" parent="Funds/LabelContainer/Owed"]
+layout_mode = 2
+text = "999,999,999/999,999,999"
+
+[node name="Broadcast" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -56.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Background" type="ColorRect" parent="Broadcast"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(7.31587e-05, 0.539619, 0.947246, 1)
+
+[node name="BroadcastText" type="Label" parent="Broadcast"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1170.0
+offset_top = -11.5
+offset_right = 1170.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Announcement text scrolls by here on this line"

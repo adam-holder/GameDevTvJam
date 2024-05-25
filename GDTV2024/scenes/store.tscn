@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dx02j6xpcmpt"]
+[gd_scene load_steps=3 format=3 uid="uid://dx02j6xpcmpt"]
 
 [ext_resource type="Script" path="res://scripts/store.gd" id="1_4gbnj"]
+[ext_resource type="PackedScene" uid="uid://d1os340hnr1fo" path="res://scenes/hud.tscn" id="2_m17yu"]
 
 [node name="Store" type="Node2D"]
 script = ExtResource("1_4gbnj")
@@ -18,5 +19,9 @@ offset_top = 333.0
 offset_right = 604.0
 offset_bottom = 364.0
 text = "End Game"
+
+[node name="HUD" parent="." instance=ExtResource("2_m17yu")]
+offset_right = 1152.0
+offset_bottom = 648.0
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
