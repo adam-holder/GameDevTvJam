@@ -1,4 +1,7 @@
 extends Node
+class_name Items
+
+var item_types: Array = ["weapon","valuable","med","book","food"]
 
 var weapon_common: Dictionary = {
 	0:{

@@ -1,16 +1,17 @@
 extends Node2D
 
 @onready var hud = $HUD
+@onready var robot = $RobotController
+
 
 @export_category("Game Settings")
 ## Total number of days the game will go for
 @export var total_days: int = 7
 ## Total amount of money to be owed to Nom Took
 @export var total_owed: int = 9999
-## Item categories
-@export var item_types: Array = ["Weapon","Valuable","Meds","Books","Food"]
 ## Times of day
 @export var times: Array = ["Morning","Afternoon","Night"]
+@export var starting_items: int = 6
 
 var money: int
 var resources: int
@@ -21,6 +22,9 @@ var day_favorite: String
 var day_appeal: float
 
 var save_exists: bool = false
+var items = Items.new()
+
+var loot : Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -46,7 +50,8 @@ func morning_phase():
 	hud.change_value("day",1)
 	if day < total_days:
 		if day == 1: 
-			pass
+			loot = robot.generate_loot(starting_items)
+			print(loot)
 		elif day == 2:
 			pass
 		else:
@@ -94,7 +99,7 @@ func _on_button_pressed():
 		morning_phase()
 
 func set_day_favorite_type():
-	day_favorite = item_types.pick_random()
+	day_favorite = items.item_types.pick_random()
 	print("day favorite set to "+day_favorite)
 	hud.select_announcement(day_favorite)
 
