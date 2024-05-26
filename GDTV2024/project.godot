@@ -19,3 +19,7 @@ config/icon="res://visuals/icon.svg"
 [autoload]
 
 SceneManager="*res://scenes/utilities/SceneManager.tscn"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
