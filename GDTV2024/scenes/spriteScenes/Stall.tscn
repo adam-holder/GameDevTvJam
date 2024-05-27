@@ -16,3 +16,5 @@ region_rect = Rect2(0, 85, 16, 16)
 texture = ExtResource("1_deiiv")
 region_enabled = true
 region_rect = Rect2(68, 102, 16, 16)
+
+[node name="ItemSlot" type="Sprite2D" parent="."]
