@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var hud = $HUD
 @onready var robot = $RobotController
+@onready var player = $PlayerController
+@onready var storage = $StorageController
 
 
 @export_category("Game Settings")
@@ -44,14 +46,23 @@ func _process(delta):
 	
 
 func morning_phase():
+	# update the day count
 	time = times[0]
 	hud.change_value("time",time)
 	day += 1
 	hud.change_value("day",1)
+	
+	# add any queued resources to the resource total
+	resources += player.queued_resources
+	hud.resources = resources
+	player.queued_resources = 0
+	
 	if day < total_days:
 		if day == 1: 
 			loot = robot.generate_loot(starting_items)
 			print(loot)
+			# TODO: show screen displaying loot contents w/accept button
+			add_loot()
 		elif day == 2:
 			pass
 		else:
@@ -102,6 +113,9 @@ func set_day_favorite_type():
 	day_favorite = items.item_types.pick_random()
 	print("day favorite set to "+day_favorite)
 	hud.select_announcement(day_favorite)
+	
+func add_loot():
+	player.item_inventory = loot
 
 func ending(type):
 	if type == "good":

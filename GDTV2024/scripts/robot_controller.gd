@@ -44,6 +44,7 @@ func generate_loot(number: int, type: String = "NULL"):
 				rarity_type = "rare"
 			loot[i] = pick_item(loot_type, rarity_type)
 		return loot
+		
 
 func pick_item(type,rarity):
 	var picked: Dictionary
