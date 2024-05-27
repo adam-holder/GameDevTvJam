@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://kqpbfpqqvxke"]
+[gd_scene load_steps=9 format=3 uid="uid://kqpbfpqqvxke"]
 
-[ext_resource type="Script" path="res://scenes/last_stand.gd" id="1_1jbur"]
+[ext_resource type="Script" path="res://scripts/last_stand.gd" id="1_1jbur"]
 [ext_resource type="Texture2D" uid="uid://wabraobwxaj6" path="res://Tilemap/Sprites/roguelikeDungeon_transparent.png" id="1_yiq7n"]
 [ext_resource type="Texture2D" uid="uid://boemba1v1lih2" path="res://Tilemap/Sprites/roguelikeIndoor_transparent.png" id="2_sdfy1"]
-[ext_resource type="PackedScene" uid="uid://twiydnm63mie" path="res://scenes/stall.tscn" id="4_ve604"]
+[ext_resource type="PackedScene" uid="uid://twiydnm63mie" path="res://scenes/spriteScenes/Stall.tscn" id="4_ve604"]
+[ext_resource type="Script" path="res://scripts/table.gd" id="5_at2xv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w5ydn"]
 texture = ExtResource("1_yiq7n")
@@ -395,16 +396,28 @@ position = Vector2(72, 8)
 [node name="Stall2" parent="Top Stall" instance=ExtResource("4_ve604")]
 position = Vector2(88, 8)
 
-[node name="Top Stall2" type="Node2D" parent="."]
+[node name="Middle Table" type="Node2D" parent="."]
+position = Vector2(72, 48)
 
-[node name="Stall0" parent="Top Stall2" instance=ExtResource("4_ve604")]
-position = Vector2(72, 56)
+[node name="TableTop" type="Sprite2D" parent="Middle Table"]
+texture = ExtResource("2_sdfy1")
+region_enabled = true
+region_rect = Rect2(102, 0, 16, 16)
+script = ExtResource("5_at2xv")
 
-[node name="Stall1" parent="Top Stall2" instance=ExtResource("4_ve604")]
-position = Vector2(72, 72)
+[node name="TableMid" type="Sprite2D" parent="Middle Table"]
+position = Vector2(0, 16)
+texture = ExtResource("2_sdfy1")
+region_enabled = true
+region_rect = Rect2(85, 17, 16, 16)
+script = ExtResource("5_at2xv")
 
-[node name="Stall2" parent="Top Stall2" instance=ExtResource("4_ve604")]
-position = Vector2(72, 88)
+[node name="TableBottom" type="Sprite2D" parent="Middle Table"]
+position = Vector2(0, 32)
+texture = ExtResource("2_sdfy1")
+region_enabled = true
+region_rect = Rect2(102, 34, 16, 16)
+script = ExtResource("5_at2xv")
 
 [node name="Extra Right Stall" type="Node2D" parent="."]
 

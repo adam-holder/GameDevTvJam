@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://twiydnm63mie"]
 
 [ext_resource type="Texture2D" uid="uid://wabraobwxaj6" path="res://Tilemap/Sprites/roguelikeDungeon_transparent.png" id="1_deiiv"]
-[ext_resource type="Script" path="res://scenes/stall.gd" id="1_w0gu2"]
+[ext_resource type="Script" path="res://scripts/stall.gd" id="1_w0gu2"]
 
 [node name="Stall" type="Node2D"]
 script = ExtResource("1_w0gu2")
