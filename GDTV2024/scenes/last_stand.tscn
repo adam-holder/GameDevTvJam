@@ -1,7 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://kqpbfpqqvxke"]
 
+[ext_resource type="Script" path="res://scenes/last_stand.gd" id="1_1jbur"]
 [ext_resource type="Texture2D" uid="uid://wabraobwxaj6" path="res://Tilemap/Sprites/roguelikeDungeon_transparent.png" id="1_yiq7n"]
 [ext_resource type="Texture2D" uid="uid://boemba1v1lih2" path="res://Tilemap/Sprites/roguelikeIndoor_transparent.png" id="2_sdfy1"]
+[ext_resource type="PackedScene" uid="uid://twiydnm63mie" path="res://scenes/stall.tscn" id="4_ve604"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w5ydn"]
 texture = ExtResource("1_yiq7n")
@@ -195,6 +197,15 @@ use_texture_padding = false
 14:17/0 = 0
 15:17/0 = 0
 12:17/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+1:8/next_alternative_id = 2
+1:8/0 = 0
+0:8/0 = 0
+3:9/next_alternative_id = 2
+3:9/0 = 0
+3:9/1 = 1
+3:9/1/flip_h = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_swovy"]
 texture = ExtResource("2_sdfy1")
@@ -300,45 +311,133 @@ separation = Vector2i(1, 1)
 4:6/0 = 0
 4:7/0 = 0
 0:8/0 = 0
+14:13/0 = 0
+15:13/0 = 0
+12:15/0 = 0
+13:15/0 = 0
+12:16/0 = 0
+13:16/0 = 0
+10:17/0 = 0
+12:14/0 = 0
+13:14/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_1o4hr"]
 sources/0 = SubResource("TileSetAtlasSource_w5ydn")
 sources/1 = SubResource("TileSetAtlasSource_swovy")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4utyk"]
-atlas = ExtResource("1_yiq7n")
-region = Rect2(68, 102, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_qc4ge"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4utyk")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
 [node name="LastStand" type="Node2D"]
+script = ExtResource("1_1jbur")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_1o4hr")
 format = 2
 layer_0/name = "Floor"
 layer_0/z_index = -1
-layer_0/tile_data = PackedInt32Array(0, 983040, 3, 1, 983040, 3, 2, 589824, 3, 3, 589824, 3, 4, 589824, 3, 65537, 983040, 3, 131075, 983040, 3, 131074, 983040, 3, 196610, 983040, 3, 65540, 851968, 3, 131076, 983040, 3, 65536, 983040, 3, 65538, 851968, 3, 65539, 851968, 3, 131073, 851968, 3, 131072, 589824, 3, 196611, 589824, 3, 196608, 589824, 3, 262144, 589824, 3, 196609, 851968, 3, 262145, 851968, 3, 196612, 983040, 3, 262148, 983040, 3, 262147, 589824, 3, 262146, 983040, 3, 5, 917504, 3, 65541, 983040, 3, 131077, 851968, 3, 196613, 851968, 3, 262149, 851968, 3, 327685, 851968, 3, 327684, 983040, 3, 327683, 589824, 3, 327682, 983040, 3, 327681, 851968, 3, 327680, 589824, 3, 393216, 983040, 3, 393217, 983040, 3, 393218, 983040, 3, 393219, 983040, 3, 393220, 983040, 3, 393221, 983040, 3, 393222, 983040, 3, 327686, 589824, 3, 262150, 589824, 3, 196614, 589824, 3, 131078, 589824, 3, 65542, 983040, 3, 6, 983040, 3)
-layer_1/name = "AddOn"
-layer_1/modulate = Color(1, 1, 1, 0.196078)
+layer_0/tile_data = PackedInt32Array(0, 983040, 3, 1, 983040, 3, 2, 983040, 3, 3, 851968, 3, 4, 851968, 3, 65537, 983040, 3, 131075, 983040, 3, 131074, 983040, 3, 196610, 983040, 3, 65540, 851968, 3, 131076, 983040, 3, 65536, 983040, 3, 65538, 983040, 3, 65539, 851968, 3, 131073, 851968, 3, 131072, 851968, 3, 196611, 983040, 3, 196608, 851968, 3, 262144, 851968, 3, 196609, 851968, 3, 262145, 851968, 3, 196612, 851968, 3, 262148, 851968, 3, 262147, 983040, 3, 262146, 983040, 3, 5, 851968, 3, 65541, 851968, 3, 131077, 983040, 3, 196613, 983040, 3, 262149, 983040, 3, 327685, 983040, 3, 327684, 851968, 3, 327683, 983040, 3, 327682, 983040, 3, 327681, 851968, 3, 327680, 851968, 3, 393216, 983040, 3, 393217, 983040, 3, 393218, 983040, 3, 393219, 983040, 3, 393220, 983040, 3, 393221, 983040, 3, 393222, 983040, 3, 327686, 983040, 3, 262150, 983040, 3, 196614, 983040, 3, 131078, 983040, 3, 65542, 983040, 3, 6, 983040, 3, 7, 983040, 3, 8, 983040, 3, 65544, 983040, 3, 131080, 851968, 3, 196616, 851968, 3, 262152, 851968, 3, 327688, 851968, 3, 393224, 983040, 3, 393223, 983040, 3, 327687, 851968, 3, 262151, 851968, 3, 196615, 851968, 3, 131079, 851968, 3, 65543, 983040, 3, -65536, 983040, 3, -131072, 983040, 3, -131071, 983040, 3, -65535, 983040, 3, -65534, 983040, 3, -65533, 983040, 3, -65532, 983040, 3, -65531, 983040, 3, -131067, 983040, 3, -131066, 983040, 3, -131065, 983040, 3, -131064, 983040, 3, -65528, 983040, 3, -65529, 983040, 3, -65530, 983040, 3, -131068, 983040, 3, -131069, 983040, 3, -131070, 983040, 3, -196608, 983040, 3, -196607, 983040, 3, -196606, 983040, 3, -196605, 983040, 3, -196604, 983040, 3, -196603, 983040, 3, -196602, 983040, 3, -196601, 983040, 3, -196600, 983040, 3)
+layer_1/name = "AddOnBackground"
+layer_1/modulate = Color(1, 1, 1, 0.313726)
 layer_1/z_index = 1
-layer_1/tile_data = PackedInt32Array(-131072, 262144, 7, -65536, 262144, 8, -131071, 327680, 7, -131069, 393216, 7, -131070, 327680, 7, -131068, 327680, 7, -131067, 327680, 7, -131066, 458752, 7, -65530, 458752, 8, -65533, 393216, 8, 0, 262144, 8, 65536, 262144, 8, 327680, 262144, 7, 393216, 262144, 8, 327686, 458752, 7, 393222, 458752, 8, 6, 458752, 8, 65542, 458752, 8, 131078, 458752, 8, 262150, 458752, 8, 196614, 458752, 8, 327683, 393216, 7, 327681, 327680, 7, 327682, 327680, 7, 327684, 327680, 7, 327685, 327680, 7, 131072, 262144, 8, 196608, 262144, 8, 262144, 262144, 8, 393219, 393216, 8)
+layer_1/tile_data = PackedInt32Array(-65536, 262144, 8, 0, 262144, 7, 65536, 262144, 8, 327680, 262144, 7, 393216, 262144, 8, 327683, 393216, 7, 327681, 327680, 7, 327682, 327680, 7, 131072, 262144, 8, 196608, 262144, 8, 262144, 262144, 8, 393219, 393216, 8, 327685, 393216, 7, 327684, 327680, 7, 327686, 327680, 7, 327687, 327680, 7, 327688, 458752, 7, 393221, 393216, 8, 393224, 458752, 8, 262152, 458752, 8, 196616, 458752, 8, 131080, 458752, 8, 65544, 458752, 8, 8, 458752, 7, -65528, 458752, 8, -327680, 262144, 7, -327672, 458752, 7, -327679, 327680, 7, -327678, 327680, 7, -327676, 327680, 8, -327674, 327680, 9, -327673, 327680, 7, -262136, 458752, 8, -196600, 458752, 8, -262144, 262144, 8, -196608, 262144, 8, -131072, 262144, 8, -131064, 458752, 8, 1, 327680, 7, 6, 393216, 7, 7, 327680, 7, 4, 327680, 7, 2, 393216, 7, 65538, 393216, 8, 65542, 393216, 8, 3, 327680, 7, 5, 327680, 7)
+layer_2/name = "AddOnForeground"
+layer_2/z_index = 1
+layer_2/tile_data = PackedInt32Array(-196605, 786433, 14, -131069, 786433, 16, -196603, 851969, 14, -131067, 851969, 16, -131068, 655361, 17)
+layer_3/name = "AddOnForeGround2"
+layer_3/z_index = 2
+layer_3/tile_data = PackedInt32Array(-131067, 196608, 65545, -196603, 196608, 65545, -131069, 196608, 9, -196605, 196608, 9, -131068, 65536, 9, -196604, 65536, 8)
+layer_4/name = "AddOnForeground3"
+layer_4/z_index = 3
+layer_4/tile_data = PackedInt32Array(-327677, 262144, 7, -196605, 262144, 7, -327675, 458752, 7, -196603, 458752, 7, -196604, 327680, 7, -262141, 262144, 8, -131069, 262144, 8, -131067, 458752, 8, -262139, 458752, 8, -327676, 327680, 7)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-15, 67)
-texture = ExtResource("1_yiq7n")
-region_enabled = true
-region_rect = Rect2(68, 102, 16, 16)
+[node name="Base Left Stall" type="Node2D" parent="."]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-38, 104)
-sprite_frames = SubResource("SpriteFrames_qc4ge")
+[node name="Stall0" parent="Base Left Stall" instance=ExtResource("4_ve604")]
+position = Vector2(24, 40)
+
+[node name="Stall1" parent="Base Left Stall" instance=ExtResource("4_ve604")]
+position = Vector2(24, 56)
+
+[node name="Stall2" parent="Base Left Stall" instance=ExtResource("4_ve604")]
+position = Vector2(24, 72)
+
+[node name="Stall3" parent="Base Left Stall" instance=ExtResource("4_ve604")]
+position = Vector2(24, 88)
+
+[node name="Base Right Stall" type="Node2D" parent="."]
+
+[node name="Stall0" parent="Base Right Stall" instance=ExtResource("4_ve604")]
+position = Vector2(120, 40)
+rotation = 3.14159
+scale = Vector2(1, -1)
+
+[node name="Stall1" parent="Base Right Stall" instance=ExtResource("4_ve604")]
+position = Vector2(120, 56)
+rotation = 3.14159
+scale = Vector2(1, -1)
+
+[node name="Stall2" parent="Base Right Stall" instance=ExtResource("4_ve604")]
+position = Vector2(120, 72)
+rotation = 3.14159
+scale = Vector2(1, -1)
+
+[node name="Stall3" parent="Base Right Stall" instance=ExtResource("4_ve604")]
+position = Vector2(120, 88)
+rotation = 3.14159
+scale = Vector2(1, -1)
+
+[node name="Top Stall" type="Node2D" parent="."]
+
+[node name="Stall0" parent="Top Stall" instance=ExtResource("4_ve604")]
+position = Vector2(56, 8)
+
+[node name="Stall1" parent="Top Stall" instance=ExtResource("4_ve604")]
+position = Vector2(72, 8)
+
+[node name="Stall2" parent="Top Stall" instance=ExtResource("4_ve604")]
+position = Vector2(88, 8)
+
+[node name="Top Stall2" type="Node2D" parent="."]
+
+[node name="Stall0" parent="Top Stall2" instance=ExtResource("4_ve604")]
+position = Vector2(72, 56)
+
+[node name="Stall1" parent="Top Stall2" instance=ExtResource("4_ve604")]
+position = Vector2(72, 72)
+
+[node name="Stall2" parent="Top Stall2" instance=ExtResource("4_ve604")]
+position = Vector2(72, 88)
+
+[node name="Extra Right Stall" type="Node2D" parent="."]
+
+[node name="Stall0" parent="Extra Right Stall" instance=ExtResource("4_ve604")]
+position = Vector2(136, 40)
+rotation = 3.14159
+scale = Vector2(1, -1)
+
+[node name="Stall1" parent="Extra Right Stall" instance=ExtResource("4_ve604")]
+position = Vector2(136, 56)
+rotation = 3.14159
+scale = Vector2(1, -1)
+
+[node name="Stall2" parent="Extra Right Stall" instance=ExtResource("4_ve604")]
+position = Vector2(136, 72)
+rotation = 3.14159
+scale = Vector2(1, -1)
+
+[node name="Stall3" parent="Extra Right Stall" instance=ExtResource("4_ve604")]
+position = Vector2(136, 88)
+rotation = 3.14159
+scale = Vector2(1, -1)
+
+[node name="Extra Left Stall" type="Node2D" parent="."]
+
+[node name="Stall0" parent="Extra Left Stall" instance=ExtResource("4_ve604")]
+position = Vector2(8, 40)
+
+[node name="Stall2" parent="Extra Left Stall" instance=ExtResource("4_ve604")]
+position = Vector2(8, 56)
+
+[node name="Stall3" parent="Extra Left Stall" instance=ExtResource("4_ve604")]
+position = Vector2(8, 72)
+
+[node name="Stall4" parent="Extra Left Stall" instance=ExtResource("4_ve604")]
+position = Vector2(8, 88)
