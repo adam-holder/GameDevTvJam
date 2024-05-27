@@ -10,3 +10,11 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func add_from_inv(item):
+	storage_items[storage_items.size()] = item
+	
+func send_to_inv(item_key):
+	var send = storage_items[item_key]
+	storage_items.erase(item_key)
+	return send

@@ -108,15 +108,15 @@ func _input(event):
 			paused = true
 	
 func select_announcement(type):
-	if type == "Weapon":
+	if type == "weapon":
 		broadcast_text.text = weapon_announcements.pick_random()
-	elif type == "Valuable":
+	elif type == "valuable":
 		broadcast_text.text = valuable_announcements.pick_random()
-	elif type == "Meds":
+	elif type == "med":
 		broadcast_text.text = meds_announcements.pick_random()
-	elif type == "Books":
+	elif type == "book":
 		broadcast_text.text = book_announcements.pick_random()
-	elif type == "Food":
+	elif type == "food":
 		broadcast_text.text = food_announcements.pick_random()
 	else:
 		broadcast_text.text = "ERROR: INCORRECT TYPE PASSED"

@@ -1,0 +1,85 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm15xlj34g63w"]
+
+[ext_resource type="Script" path="res://scripts/preferred_item_prompt.gd" id="1_x4581"]
+
+[node name="PreferredItemPrompt" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x4581")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -141.0
+offset_top = -164.5
+offset_right = 141.0
+offset_bottom = 164.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(7.31587e-05, 0.539619, 0.947246, 1)
+
+[node name="RobotText" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -122.0
+offset_top = -149.0
+offset_right = 123.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "\"What type of item should I prioritize looking for, friend?\""
+fit_content = true
+autowrap_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -20.0
+offset_right = 48.0
+offset_bottom = 151.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Weapons" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Weapons"
+
+[node name="Valuables" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Valuables
+"
+
+[node name="Meds" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Medication"
+
+[node name="Books" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Books"
+
+[node name="Food" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Food"
+
+[connection signal="pressed" from="VBoxContainer/Weapons" to="." method="_on_weapons_pressed"]
+[connection signal="pressed" from="VBoxContainer/Valuables" to="." method="_on_valuables_pressed"]
+[connection signal="pressed" from="VBoxContainer/Meds" to="." method="_on_meds_pressed"]
+[connection signal="pressed" from="VBoxContainer/Books" to="." method="_on_books_pressed"]
+[connection signal="pressed" from="VBoxContainer/Food" to="." method="_on_food_pressed"]

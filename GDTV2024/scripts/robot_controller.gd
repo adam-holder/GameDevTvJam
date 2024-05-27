@@ -5,7 +5,7 @@ extends Node2D
 var item_types: Array
 var rare_chance: float = 0.20 # chance for rare instead of common
 var fav_chance : float = 0.40 # chance for specified item type
-var loot: Dictionary = {}
+var robot_items: Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,7 +18,7 @@ func _process(delta):
 	pass
 
 func generate_loot(number: int, type: String = "NULL"):
-	loot.clear()
+	robot_items.clear()
 	if type == "NULL":
 		for i in number:
 			var loot_type = item_types.pick_random()
@@ -26,8 +26,8 @@ func generate_loot(number: int, type: String = "NULL"):
 			var rarity_chance = randf()
 			if rarity_chance <= rare_chance:
 				rarity_type = "rare"
-			loot[i] = pick_item(loot_type,rarity_type)
-		return loot
+			robot_items[i] = pick_item(loot_type,rarity_type)
+		return robot_items
 	else:
 		for i in number:
 			var ritem: float = randf()
@@ -42,8 +42,8 @@ func generate_loot(number: int, type: String = "NULL"):
 			var rarity_chance = randf()
 			if rarity_chance <= rare_chance:
 				rarity_type = "rare"
-			loot[i] = pick_item(loot_type, rarity_type)
-		return loot
+			robot_items[i] = pick_item(loot_type, rarity_type)
+		return robot_items
 		
 
 func pick_item(type,rarity):

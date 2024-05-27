@@ -1,6 +1,11 @@
 extends Node2D
 
+## GUI
 @onready var hud = $HUD
+@onready var preferred_item_prompt = $PreferredItemPrompt
+
+
+## Controllers
 @onready var robot = $RobotController
 @onready var player = $PlayerController
 @onready var storage = $StorageController
@@ -22,11 +27,15 @@ var time: String = times[0]
 var payed: int
 var day_favorite: String
 var day_appeal: float
+var item_pref: String
 
 var save_exists: bool = false
 var items = Items.new()
 
-var loot : Dictionary = {}
+var robot_items : Dictionary = {}
+
+var player_items: Dictionary = {}
+var storage_items: Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -57,16 +66,19 @@ func morning_phase():
 	hud.resources = resources
 	player.queued_resources = 0
 	
+	#update store vars with controller vars
+	update_items()
+	
 	if day < total_days:
 		if day == 1: 
-			loot = robot.generate_loot(starting_items)
-			print(loot)
+			robot_items = robot.generate_loot(starting_items)
+			print(robot_items)
 			# TODO: show screen displaying loot contents w/accept button
-			add_loot()
+			player.add_from_robot(robot.robot_items)
 		elif day == 2:
-			pass
+			robot_items = robot.generate_loot(starting_items, item_pref)
 		else:
-			pass
+			robot_items = robot.generate_loot(starting_items, item_pref)
 	else: #FINAL DAY
 		pass
 
@@ -88,11 +100,14 @@ func evening_phase():
 	hud.change_value("time",time)
 	if day < total_days:
 		if day == 1:
-			pass
+			set_day_favorite_type()
+			preferred_item_prompt.display(day_favorite)
 		elif day == 2:
-			pass
+			set_day_favorite_type()
+			preferred_item_prompt.display(day_favorite)
 		else:
-			pass
+			set_day_favorite_type()
+			preferred_item_prompt.display(day_favorite)
 	else: #FINAL DAY
 		if payed >= total_owed:
 			ending("good")
@@ -113,12 +128,43 @@ func set_day_favorite_type():
 	day_favorite = items.item_types.pick_random()
 	print("day favorite set to "+day_favorite)
 	hud.select_announcement(day_favorite)
+
+func inv_to_storage():
+	#TODO: show inventory, allow selecting multipe, add keys to array
+	# on accept call this function
+	var selected: Array = []
+	for i in selected:
+		var sitem = player.send_to_storage(selected[i-1])
+		storage.add_item_to_storage(sitem)
+		
+func storage_to_inv():
+	#TODO: show inventory, allow selecting multipe, add keys to array
+	# on accept call this function
+	var selected: Array = []
+	for i in selected:
+		var sitem = storage.send_to_inv(selected[i-1])
+		player.add_item_to_inv(sitem)
+
+func update_items(type = "all"):
+	if type == "all":
+		robot_items = robot.robot_items
+		player_items = player.item_inventory
+		storage_items = storage.storage_items
+	if type == "robot":
+		robot_items = robot.robot_items
+	if type == "player":
+		player_items = player.item_inventory
+	if type == "storage":
+		storage_items = storage.storage_items
 	
-func add_loot():
-	player.item_inventory = loot
 
 func ending(type):
 	if type == "good":
 		SceneManager.SwitchScene("Ending")
 	if type == "bad":
 		SceneManager.SwitchScene("Ending")
+
+
+func _on_preferred_item_prompt_pref_changed(pref):
+	item_pref = pref
+	print(item_pref)

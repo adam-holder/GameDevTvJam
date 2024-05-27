@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dx02j6xpcmpt"]
+[gd_scene load_steps=7 format=3 uid="uid://dx02j6xpcmpt"]
 
 [ext_resource type="Script" path="res://scripts/store.gd" id="1_4gbnj"]
 [ext_resource type="PackedScene" uid="uid://d1os340hnr1fo" path="res://scenes/hud.tscn" id="2_m17yu"]
 [ext_resource type="Script" path="res://scripts/robot_controller.gd" id="3_gwbbs"]
 [ext_resource type="Script" path="res://scripts/player_controller.gd" id="4_j7p08"]
 [ext_resource type="Script" path="res://scripts/storage_controller.gd" id="5_tdjnv"]
+[ext_resource type="PackedScene" uid="uid://dm15xlj34g63w" path="res://scenes/preferred_item_prompt.tscn" id="6_r6vhc"]
 
 [node name="Store" type="Node2D"]
 script = ExtResource("1_4gbnj")
@@ -37,4 +38,17 @@ script = ExtResource("4_j7p08")
 [node name="StorageController" type="Node2D" parent="."]
 script = ExtResource("5_tdjnv")
 
+[node name="PreferredItemPrompt" parent="." instance=ExtResource("6_r6vhc")]
+visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 576.0
+offset_top = 324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 1
+grow_vertical = 1
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pref_changed" from="PreferredItemPrompt" to="." method="_on_preferred_item_prompt_pref_changed"]
