@@ -46,7 +46,6 @@ func _ready():
 		hud.change_value("time",time)
 		hud.change_value("day",day)
 		morning_phase()
-	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

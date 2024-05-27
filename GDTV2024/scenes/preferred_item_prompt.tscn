@@ -36,7 +36,7 @@ anchor_bottom = 0.5
 offset_left = -122.0
 offset_top = -149.0
 offset_right = 123.0
-offset_bottom = -100.0
+offset_bottom = -29.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "\"What type of item should I prioritize looking for, friend?\""
@@ -78,8 +78,13 @@ text = "Books"
 layout_mode = 2
 text = "Food"
 
+[node name="Continue" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Continue"
+
 [connection signal="pressed" from="VBoxContainer/Weapons" to="." method="_on_weapons_pressed"]
 [connection signal="pressed" from="VBoxContainer/Valuables" to="." method="_on_valuables_pressed"]
 [connection signal="pressed" from="VBoxContainer/Meds" to="." method="_on_meds_pressed"]
 [connection signal="pressed" from="VBoxContainer/Books" to="." method="_on_books_pressed"]
 [connection signal="pressed" from="VBoxContainer/Food" to="." method="_on_food_pressed"]
+[connection signal="pressed" from="VBoxContainer/Continue" to="." method="_on_continue_pressed"]
