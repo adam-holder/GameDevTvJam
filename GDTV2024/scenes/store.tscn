@@ -106,14 +106,6 @@ grow_horizontal = 2
 text = "Type
 "
 
-[node name="Action" type="Button" parent="Inventories"]
-layout_mode = 0
-offset_left = 553.0
-offset_top = 537.0
-offset_right = 598.0
-offset_bottom = 568.0
-text = "Action"
-
 [node name="ItemList" type="ItemList" parent="Inventories"]
 layout_mode = 1
 anchors_preset = 8
@@ -131,5 +123,30 @@ select_mode = 1
 allow_search = false
 icon_scale = 4.0
 
+[node name="Buttons" type="HBoxContainer" parent="Inventories"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -118.0
+offset_right = 60.0
+offset_bottom = -78.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Action1" type="Button" parent="Inventories/Buttons"]
+layout_mode = 2
+text = "Action"
+
+[node name="Action2" type="Button" parent="Inventories/Buttons"]
+visible = false
+layout_mode = 2
+text = "Action"
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pref_changed" from="PreferredItemPrompt" to="." method="_on_preferred_item_prompt_pref_changed"]
+[connection signal="pressed" from="Inventories/Buttons/Action1" to="Inventories" method="_on_action_1_pressed"]
+[connection signal="pressed" from="Inventories/Buttons/Action2" to="Inventories" method="_on_action_2_pressed"]

@@ -63,8 +63,8 @@ var book_rare: Dictionary = {
 }
 var food_common: Dictionary = {
 	0:{
-		"name": "Canned Food",
-		"desc": "Potentially meat?",
+		"name": "Can of Soup",
+		"desc": "100% of your daily recommended sodium intake.",
 		"value": 60
 	}
 }

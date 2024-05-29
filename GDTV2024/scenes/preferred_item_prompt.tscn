@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dm15xlj34g63w"]
+[gd_scene load_steps=4 format=3 uid="uid://dm15xlj34g63w"]
 
 [ext_resource type="Script" path="res://scripts/preferred_item_prompt.gd" id="1_x4581"]
+[ext_resource type="FontFile" uid="uid://wmrjdv4824il" path="res://fonts/robot.otf" id="2_bgphy"]
+[ext_resource type="FontFile" uid="uid://dg2aphvdwty0k" path="res://fonts/default.ttf" id="3_eetqj"]
 
 [node name="PreferredItemPrompt" type="Control"]
 layout_mode = 3
@@ -33,12 +35,24 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -122.0
+offset_left = -133.0
 offset_top = -149.0
-offset_right = 123.0
+offset_right = 137.0
 offset_bottom = -29.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("2_bgphy")
+theme_override_fonts/bold_font = ExtResource("2_bgphy")
+theme_override_fonts/italics_font = ExtResource("2_bgphy")
+theme_override_fonts/bold_italics_font = ExtResource("2_bgphy")
+theme_override_fonts/mono_font = ExtResource("2_bgphy")
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 18
+theme_override_font_sizes/italics_font_size = 18
+theme_override_font_sizes/bold_italics_font_size = 18
+theme_override_font_sizes/mono_font_size = 18
 text = "\"What type of item should I prioritize looking for, friend?\""
 fit_content = true
 autowrap_mode = 2
@@ -59,27 +73,39 @@ grow_vertical = 2
 
 [node name="Weapons" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_eetqj")
+theme_override_font_sizes/font_size = 20
 text = "Weapons"
 
 [node name="Valuables" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_eetqj")
+theme_override_font_sizes/font_size = 20
 text = "Valuables
 "
 
 [node name="Meds" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_eetqj")
+theme_override_font_sizes/font_size = 20
 text = "Medication"
 
 [node name="Books" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_eetqj")
+theme_override_font_sizes/font_size = 20
 text = "Books"
 
 [node name="Food" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_eetqj")
+theme_override_font_sizes/font_size = 22
 text = "Food"
 
 [node name="Continue" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_eetqj")
+theme_override_font_sizes/font_size = 22
 text = "Continue"
 
 [connection signal="pressed" from="VBoxContainer/Weapons" to="." method="_on_weapons_pressed"]

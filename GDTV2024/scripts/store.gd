@@ -3,6 +3,7 @@ extends Node2D
 ## GUI
 @onready var hud = $HUD
 @onready var preferred_item_prompt = $PreferredItemPrompt
+@onready var inventories = $Inventories
 
 
 ## Controllers
@@ -71,6 +72,11 @@ func morning_phase():
 	if day < total_days:
 		if day == 1: 
 			robot_items = robot.generate_loot(starting_items)
+			var robot_inventory: Array = []
+			for i in robot_items:
+				var name_cost: String = str(robot_items[i]["name"])+"               "+str(robot_items[i]["value"])
+				robot_inventory.append(name_cost)
+			inventories.list_items("robot",robot_inventory)
 			print(robot_items)
 			# TODO: show screen displaying loot contents w/accept button
 			player.add_from_robot(robot.robot_items)
