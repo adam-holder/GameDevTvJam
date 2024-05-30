@@ -53,7 +53,22 @@ func _ready():
 func _process(delta):
 	pass
 	
-
+func _input(event):
+	if event.is_action_pressed("inventory"):
+		if inventories.visible == true:
+			inventories.visible = false
+		else:
+			var player_inventory_icons : Array = []
+			var player_inventory : Array = []
+			for i in player_items:
+				var name_cost: String = str(player_items[i]["name"]+" - "+str(player_items[i]["value"]))
+				player_inventory.append(name_cost)
+				player_inventory_icons.append(player_items[i]["icon"])
+			print(player_inventory)
+			inventories.list_items("inventory",player_inventory_icons, player_inventory)
+	if event.is_action_pressed("ui_cancel") and inventories.visible == true:
+		inventories.visible = false
+		
 func morning_phase():
 	# update the day count
 	time = times[0]
@@ -73,13 +88,15 @@ func morning_phase():
 		if day == 1: 
 			robot_items = robot.generate_loot(starting_items)
 			var robot_inventory: Array = []
+			var robot_items_icons: Array = []
 			for i in robot_items:
-				var name_cost: String = str(robot_items[i]["name"])+"               "+str(robot_items[i]["value"])
+				var name_cost: String = str(robot_items[i]["name"])+" - "+str(robot_items[i]["value"])
 				robot_inventory.append(name_cost)
-			inventories.list_items("robot",robot_inventory)
-			print(robot_items)
-			# TODO: show screen displaying loot contents w/accept button
+				robot_items_icons.append(robot_items[i]["icon"])
+			inventories.list_items("robot",robot_items_icons,robot_inventory)
+			print("robot: ",robot_items_icons, robot_items)
 			player.add_from_robot(robot.robot_items)
+			player_items = player.item_inventory
 		elif day == 2:
 			robot_items = robot.generate_loot(starting_items, item_pref)
 		else:

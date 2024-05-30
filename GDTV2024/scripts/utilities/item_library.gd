@@ -7,14 +7,16 @@ var weapon_common: Dictionary = {
 	0:{
 		"name": "Bat",
 		"desc": "A run-of-the-mill Louisville Slugger.",
-		"value": 25
+		"value": 25,
+		"icon":"res://visuals/Items/Bat.png"
 	}
 }
 var weapon_rare: Dictionary = {
 	0:{
 		"name": "Gun",
 		"desc": "a.k.a a rooty tooty point & shooty",
-		"value": 400
+		"value": 400,
+		"icon":"res://visuals/Items/handgun.png"
 	}
 }
 
@@ -22,14 +24,16 @@ var valuable_common: Dictionary = {
 	0:{
 		"name": "Watch",
 		"desc": "A classic wristwatch.",
-		"value": 40
+		"value": 40,
+		"icon":"res://visuals/Items/watch.png"
 	}
 }
 var valuable_rare: Dictionary = {
 	0:{
 		"name": "Ring",
 		"desc": "A simple band with a red gem",
-		"value": 550
+		"value": 550,
+		"icon":"res://visuals/Items/ring.png"
 	}
 }
 
@@ -37,41 +41,47 @@ var med_common: Dictionary = {
 	0:{
 		"name": "Bandages",
 		"desc": "A comforting synthetic-cotton blend",
-		"value": 10
+		"value": 10,
+		"icon":"res://visuals/Items/bandages.png"
 	}
 }
 var med_rare: Dictionary = {
 	0:{
 		"name": "Drugs",
 		"desc": "A pick-n-mix of various colorful capsules & tablets",
-		"value": 250
+		"value": 250,
+		"icon":"res://visuals/Items/Drugs.png"
 	}
 }
 var book_common: Dictionary = {
 	0:{
 		"name": "Research Notes",
 		"desc": "A pile of scribbled notes and annotated pages torn from various books",
-		"value": 100
+		"value": 100,
+		"icon":"res://visuals/Items/ResearchNotes.png"
 	}
 }
 var book_rare: Dictionary = {
 	0:{
 		"name": "Hardcover Book",
 		"desc": "A fancy leather-bound tome on a very complicated subject.",
-		"value": 300
+		"value": 300,
+		"icon":"res://visuals/Items/HardcoverBook.png"
 	}
 }
 var food_common: Dictionary = {
 	0:{
 		"name": "Can of Soup",
 		"desc": "100% of your daily recommended sodium intake.",
-		"value": 60
+		"value": 60,
+		"icon":"res://visuals/Items/CannedFood.png"
 	}
 }
 var food_rare: Dictionary = {
 	0:{
 		"name": "Unopened Fancy Lad Golden Sponge Cakes",
 		"desc": "These cakes are one of the few treats left in this world.",
-		"value": 350
+		"value": 350,
+		"icon":"res://visuals/Items/UnopenedFancyLadCakes.png"
 	}
 }

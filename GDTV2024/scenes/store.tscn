@@ -106,6 +106,13 @@ grow_horizontal = 2
 text = "Type
 "
 
+[node name="Close" type="Button" parent="Inventories"]
+offset_left = 799.0
+offset_top = 82.0
+offset_right = 817.0
+offset_bottom = 113.0
+text = "X"
+
 [node name="ItemList" type="ItemList" parent="Inventories"]
 layout_mode = 1
 anchors_preset = 8
@@ -121,6 +128,7 @@ grow_horizontal = 2
 grow_vertical = 2
 select_mode = 1
 allow_search = false
+max_text_lines = 2
 icon_scale = 4.0
 
 [node name="Buttons" type="HBoxContainer" parent="Inventories"]
@@ -148,5 +156,6 @@ text = "Action"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pref_changed" from="PreferredItemPrompt" to="." method="_on_preferred_item_prompt_pref_changed"]
+[connection signal="pressed" from="Inventories/Close" to="Inventories" method="_on_close_pressed"]
 [connection signal="pressed" from="Inventories/Buttons/Action1" to="Inventories" method="_on_action_1_pressed"]
 [connection signal="pressed" from="Inventories/Buttons/Action2" to="Inventories" method="_on_action_2_pressed"]
