@@ -3,7 +3,8 @@ extends Node2D
 ## GUI
 @onready var hud = $HUD
 @onready var preferred_item_prompt = $PreferredItemPrompt
-@onready var inventories = $Inventories
+@onready var player_inventory = $PlayerInventory
+@onready var robot_inventory = $RobotInventory
 
 
 ## Controllers
@@ -55,19 +56,30 @@ func _process(delta):
 	
 func _input(event):
 	if event.is_action_pressed("inventory"):
-		if inventories.visible == true:
-			inventories.visible = false
-		else:
-			var player_inventory_icons : Array = []
-			var player_inventory : Array = []
+		if player_inventory.visible == true:
+			player_inventory.visible = false
+		if player_inventory.visible == false and robot_inventory.visible == false:
+			print("in here")
+			var picons : Array = []
+			var pitems : Array = []
+			var sicons : Array = []
+			var sitems : Array = []
 			for i in player_items:
 				var name_cost: String = str(player_items[i]["name"]+" - "+str(player_items[i]["value"]))
-				player_inventory.append(name_cost)
-				player_inventory_icons.append(player_items[i]["icon"])
-			print(player_inventory)
-			inventories.list_items("inventory",player_inventory_icons, player_inventory)
-	if event.is_action_pressed("ui_cancel") and inventories.visible == true:
-		inventories.visible = false
+				pitems.append(name_cost)
+				picons.append(player_items[i]["icon"])
+			print(pitems)
+			for i in storage_items:
+				var name_cost: String = str(storage_items[i]["name"]+" - "+str(storage_items[i]["value"]))
+				sitems.append(name_cost)
+				sicons.append(player_items[i]["icon"])
+			print(sitems)
+			player_inventory.list_items(picons, pitems, sicons, sitems)
+	if event.is_action_pressed("ui_cancel"):
+		if player_inventory.visible == true:
+			player_inventory.visible = false
+		if robot_inventory.visible == true:
+			robot_inventory.visible == false
 		
 func morning_phase():
 	# update the day count
@@ -87,14 +99,14 @@ func morning_phase():
 	if day < total_days:
 		if day == 1: 
 			robot_items = robot.generate_loot(starting_items)
-			var robot_inventory: Array = []
-			var robot_items_icons: Array = []
+			var inventory: Array = []
+			var inventory_icons: Array = []
 			for i in robot_items:
 				var name_cost: String = str(robot_items[i]["name"])+" - "+str(robot_items[i]["value"])
-				robot_inventory.append(name_cost)
-				robot_items_icons.append(robot_items[i]["icon"])
-			inventories.list_items("robot",robot_items_icons,robot_inventory)
-			print("robot: ",robot_items_icons, robot_items)
+				inventory.append(name_cost)
+				inventory_icons.append(robot_items[i]["icon"])
+			robot_inventory.list_items(inventory_icons,inventory)
+			print("robot: ",inventory_icons, inventory)
 			player.add_from_robot(robot.robot_items)
 			player_items = player.item_inventory
 		elif day == 2:

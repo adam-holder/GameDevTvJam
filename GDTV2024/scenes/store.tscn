@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dx02j6xpcmpt"]
+[gd_scene load_steps=9 format=3 uid="uid://dx02j6xpcmpt"]
 
 [ext_resource type="Script" path="res://scripts/store.gd" id="1_4gbnj"]
 [ext_resource type="PackedScene" uid="uid://d1os340hnr1fo" path="res://scenes/hud.tscn" id="2_m17yu"]
@@ -6,7 +6,8 @@
 [ext_resource type="Script" path="res://scripts/player_controller.gd" id="4_j7p08"]
 [ext_resource type="Script" path="res://scripts/storage_controller.gd" id="5_tdjnv"]
 [ext_resource type="PackedScene" uid="uid://dm15xlj34g63w" path="res://scenes/preferred_item_prompt.tscn" id="6_r6vhc"]
-[ext_resource type="Script" path="res://scripts/utilities/inventories.gd" id="7_sxwbb"]
+[ext_resource type="Script" path="res://scripts/utilities/player_inventory.gd" id="7_rl0n4"]
+[ext_resource type="Script" path="res://scripts/utilities/robot_inventory.gd" id="8_sp67x"]
 
 [node name="Store" type="Node2D"]
 script = ExtResource("1_4gbnj")
@@ -51,7 +52,8 @@ offset_bottom = 324.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="Inventories" type="Control" parent="."]
+[node name="PlayerInventory" type="Control" parent="."]
+visible = false
 custom_minimum_size = Vector2(1152, 648)
 layout_mode = 3
 anchors_preset = 15
@@ -61,101 +63,232 @@ offset_right = 1152.0
 offset_bottom = 648.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("7_sxwbb")
+script = ExtResource("7_rl0n4")
 
-[node name="ColorRect" type="ColorRect" parent="Inventories"]
+[node name="ColorRect" type="ColorRect" parent="PlayerInventory"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -250.0
-offset_right = 250.0
-offset_bottom = 250.0
+offset_left = -325.0
+offset_top = -215.0
+offset_right = 175.0
+offset_bottom = 305.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.4, 1)
 color = Color(7.31587e-05, 0.539619, 0.947246, 1)
 
-[node name="ColorRect2" type="ColorRect" parent="Inventories/ColorRect"]
+[node name="PersonalInventory" type="Label" parent="PlayerInventory"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -229.0
+offset_top = 122.0
+offset_right = -82.0
+offset_bottom = 145.0
+grow_horizontal = 2
+text = "Personal Inventory
+"
+horizontal_alignment = 1
+
+[node name="Storage" type="Label" parent="PlayerInventory"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 124.0
+offset_top = 122.0
+offset_right = 271.0
+offset_bottom = 145.0
+grow_horizontal = 2
+text = "Storage
+"
+horizontal_alignment = 1
+
+[node name="Close" type="Button" parent="PlayerInventory"]
+layout_mode = 0
+offset_left = 923.0
+offset_top = 118.0
+offset_right = 941.0
+offset_bottom = 149.0
+text = "X"
+
+[node name="Buttons" type="HBoxContainer" parent="PlayerInventory"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -225.0
-offset_top = -444.0
-offset_right = 225.0
-offset_bottom = -44.0
+offset_left = -40.0
+offset_top = -62.0
+offset_right = 80.0
+offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 0
-color = Color(0.2208, 0.277013, 0.32, 0.823529)
+alignment = 1
 
-[node name="InventoryType" type="Label" parent="Inventories"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_top = 90.0
-offset_right = 20.0
-offset_bottom = 113.0
-grow_horizontal = 2
-text = "Type
-"
+[node name="Action1" type="Button" parent="PlayerInventory/Buttons"]
+layout_mode = 2
+text = "Action"
 
-[node name="Close" type="Button" parent="Inventories"]
-offset_left = 799.0
-offset_top = 82.0
-offset_right = 817.0
-offset_bottom = 113.0
-text = "X"
+[node name="Action2" type="Button" parent="PlayerInventory/Buttons"]
+layout_mode = 2
+text = "Action"
 
-[node name="ItemList" type="ItemList" parent="Inventories"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerInventory"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -225.0
-offset_top = -195.0
-offset_right = 225.0
-offset_bottom = 205.0
+offset_left = -306.0
+offset_top = -214.0
+offset_right = 394.0
+offset_bottom = -214.0
 grow_horizontal = 2
 grow_vertical = 2
+alignment = 1
+
+[node name="LeftBox" type="Control" parent="PlayerInventory/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerItems" type="ItemList" parent="PlayerInventory/HBoxContainer/LeftBox"]
+layout_mode = 0
+offset_left = 0.5
+offset_top = 52.0
+offset_right = 300.5
+offset_bottom = 473.0
 select_mode = 1
 allow_search = false
 max_text_lines = 2
 icon_scale = 4.0
 
-[node name="Buttons" type="HBoxContainer" parent="Inventories"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -60.0
-offset_top = -118.0
-offset_right = 60.0
-offset_bottom = -78.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Action1" type="Button" parent="Inventories/Buttons"]
+[node name="Buttons" type="Control" parent="PlayerInventory/HBoxContainer"]
 layout_mode = 2
-text = "Action"
 
-[node name="Action2" type="Button" parent="Inventories/Buttons"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerInventory/HBoxContainer/Buttons"]
+layout_mode = 0
+offset_left = -41.0
+offset_top = 228.0
+offset_right = -1.0
+offset_bottom = 294.0
+alignment = 1
+
+[node name="Right" type="Button" parent="PlayerInventory/HBoxContainer/Buttons/VBoxContainer"]
+layout_mode = 2
+text = ">"
+
+[node name="Left" type="Button" parent="PlayerInventory/HBoxContainer/Buttons/VBoxContainer"]
+layout_mode = 2
+text = "<"
+
+[node name="RightBox" type="Control" parent="PlayerInventory/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StorageItems" type="ItemList" parent="PlayerInventory/HBoxContainer/RightBox"]
+layout_mode = 0
+offset_left = 0.5
+offset_top = 52.0
+offset_right = 300.5
+offset_bottom = 473.0
+select_mode = 1
+allow_search = false
+max_text_lines = 2
+icon_scale = 4.0
+
+[node name="RobotInventory" type="Control" parent="."]
 visible = false
-layout_mode = 2
-text = "Action"
+custom_minimum_size = Vector2(1152, 648)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("8_sp67x")
+
+[node name="ColorRect2" type="ColorRect" parent="RobotInventory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -123.0
+offset_top = -216.0
+offset_right = 123.0
+offset_bottom = 304.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.4, 1)
+color = Color(7.31587e-05, 0.539619, 0.947246, 1)
+
+[node name="RobotItems" type="ItemList" parent="RobotInventory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -162.0
+offset_right = 202.0
+offset_bottom = 259.0
+grow_horizontal = 2
+grow_vertical = 2
+icon_scale = 4.0
+
+[node name="RobotLabel" type="Label" parent="RobotInventory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -197.0
+offset_right = 111.0
+offset_bottom = -174.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Robot Inventory"
+
+[node name="TakeAll" type="Button" parent="RobotInventory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 14.0
+offset_top = 266.0
+offset_right = 83.0
+offset_bottom = 297.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Take All"
+
+[node name="Close" type="Button" parent="RobotInventory"]
+offset_left = 766.0
+offset_top = 118.0
+offset_right = 784.0
+offset_bottom = 149.0
+text = "X"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pref_changed" from="PreferredItemPrompt" to="." method="_on_preferred_item_prompt_pref_changed"]
-[connection signal="pressed" from="Inventories/Close" to="Inventories" method="_on_close_pressed"]
-[connection signal="pressed" from="Inventories/Buttons/Action1" to="Inventories" method="_on_action_1_pressed"]
-[connection signal="pressed" from="Inventories/Buttons/Action2" to="Inventories" method="_on_action_2_pressed"]
+[connection signal="pressed" from="PlayerInventory/Close" to="PlayerInventory" method="_on_close_pressed"]
+[connection signal="pressed" from="RobotInventory/TakeAll" to="RobotInventory" method="_on_take_all_pressed"]
+[connection signal="pressed" from="RobotInventory/Close" to="RobotInventory" method="_on_close_pressed"]

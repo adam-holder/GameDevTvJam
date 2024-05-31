@@ -8,7 +8,9 @@ extends Control
 @onready var broadcast_text = $Broadcast/BroadcastText
 @onready var broadcast = $Broadcast
 @onready var pause_screen = $PauseScreen
-@onready var inventory = $"../Inventories"
+@onready var robot_inventory = $"../RobotInventory"
+@onready var player_inventory = $"../PlayerInventory"
+
 
 @export var scroll_speed: int = 500
 var paused: bool = false
@@ -99,7 +101,7 @@ func _input(event):
 	#putting this here so we can set HUD to Always process and leave Store at Inherit
 	#this lets us unpause after pausing (theoretically)
 	#TODO: figure out why pause doesn't pause announcement scroll despite Broadcast & children being set to pausable
-	if event.is_action_pressed("ui_cancel") and inventory.visible == false:
+	if event.is_action_pressed("ui_cancel") and (robot_inventory.visible == false and player_inventory.visible == false):
 		SceneManager.PauseGame()
 		if pause_screen.visible:
 			paused = false
