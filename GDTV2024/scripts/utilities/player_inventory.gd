@@ -3,10 +3,12 @@ extends Control
 @onready var action2 = $Buttons/Action2
 @onready var player_items = $HBoxContainer/LeftBox/PlayerItems
 @onready var storage_items = $HBoxContainer/RightBox/StorageItems
-
+@onready var player_controller = $"../PlayerController"
+@onready var storage_controller = $"../StorageController"
 
 
 var counter = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -41,3 +43,22 @@ func _on_close_pressed():
 	self.visible = false
 	player_items.clear()
 	storage_items.clear()
+
+
+func _on_right_pressed():
+	if player_items.is_anything_selected():
+		var items_to_move = player_items.get_selected_items()
+		for i in items_to_move: #itemlist array is adjusting item#, need to adjust player inventory to match
+			storage_items.add_item(player_items.get_item_text(i),player_items.get_item_icon(i))
+			storage_controller.add_from_inv(player_controller.item_inventory[i])
+			player_controller.send_to_storage(i)
+			player_items.remove_item(i)
+
+func _on_left_pressed():
+	if storage_items.is_anything_selected():
+		var items_to_move = storage_items.get_selected_items()
+		for i in items_to_move: #itemlist array is adjusting item#, need to adjust player inventory to match
+			player_items.add_item(storage_items.get_item_text(i),storage_items.get_item_icon(i))
+			player_controller.add_from_inv(storage_controller.storage_items[i])
+			storage_controller.send_to_inv(i)
+			storage_items.remove_item(i)

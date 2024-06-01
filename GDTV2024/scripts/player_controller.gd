@@ -26,6 +26,11 @@ func add_from_inv(item):
 	
 	
 func send_to_storage(item_key):
-	var send = item_inventory[item_key]
-	item_inventory.erase(item_key)
-	return send
+	if item_key+1 == item_inventory.size():
+		item_inventory.erase(item_key)
+	else:
+		for i in item_inventory.size()-(item_key+1):
+			var k = item_key+i
+			print("k: ",k)
+			item_inventory[k] = item_inventory[k+1]
+		item_inventory.erase(item_inventory.size()-1)

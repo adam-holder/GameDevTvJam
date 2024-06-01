@@ -15,6 +15,11 @@ func add_from_inv(item):
 	storage_items[storage_items.size()] = item
 	
 func send_to_inv(item_key):
-	var send = storage_items[item_key]
-	storage_items.erase(item_key)
-	return send
+	if item_key+1 == storage_items.size():
+		storage_items.erase(item_key)
+	else:
+		for i in storage_items.size()-(item_key+1):
+			var k = item_key+i
+			print("k: ",k)
+			storage_items[k] = storage_items[k+1]
+		storage_items.erase(storage_items.size()-1)
