@@ -29,7 +29,6 @@ extends Node2D
 @onready var top_stall_1 = $"Top Stall/Stall1"
 @onready var top_stall_2 = $"Top Stall/Stall2"
 #endregion ----------------Stall Variables---------------------
-
 var upgrade_level:int = 0
 
 func upgrade_stalls():

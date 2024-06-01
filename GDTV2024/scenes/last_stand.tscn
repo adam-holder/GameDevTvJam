@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://kqpbfpqqvxke"]
+[gd_scene load_steps=10 format=3 uid="uid://kqpbfpqqvxke"]
 
 [ext_resource type="Script" path="res://scripts/last_stand.gd" id="1_1jbur"]
 [ext_resource type="Texture2D" uid="uid://wabraobwxaj6" path="res://Tilemap/Sprites/roguelikeDungeon_transparent.png" id="1_yiq7n"]
 [ext_resource type="Texture2D" uid="uid://boemba1v1lih2" path="res://Tilemap/Sprites/roguelikeIndoor_transparent.png" id="2_sdfy1"]
 [ext_resource type="PackedScene" uid="uid://twiydnm63mie" path="res://scenes/spriteScenes/Stall.tscn" id="4_ve604"]
 [ext_resource type="Script" path="res://scripts/table.gd" id="5_at2xv"]
+[ext_resource type="PackedScene" uid="uid://bwtk2q7yy60qe" path="res://scenes/customer.tscn" id="6_lgkbt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w5ydn"]
 texture = ExtResource("1_yiq7n")
@@ -1088,3 +1089,6 @@ position = Vector2(8, 72)
 
 [node name="Stall4" parent="Extra Left Stall" instance=ExtResource("4_ve604")]
 position = Vector2(8, 88)
+
+[node name="customer" parent="." instance=ExtResource("6_lgkbt")]
+position = Vector2(40, -8)
