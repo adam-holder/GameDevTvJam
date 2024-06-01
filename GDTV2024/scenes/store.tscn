@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dx02j6xpcmpt"]
+[gd_scene load_steps=11 format=3 uid="uid://dx02j6xpcmpt"]
 
 [ext_resource type="Script" path="res://scripts/store.gd" id="1_4gbnj"]
 [ext_resource type="PackedScene" uid="uid://d1os340hnr1fo" path="res://scenes/hud.tscn" id="2_m17yu"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/storage_controller.gd" id="5_tdjnv"]
 [ext_resource type="PackedScene" uid="uid://dm15xlj34g63w" path="res://scenes/preferred_item_prompt.tscn" id="6_r6vhc"]
 [ext_resource type="Script" path="res://scripts/utilities/player_inventory.gd" id="7_rl0n4"]
+[ext_resource type="Script" path="res://scripts/utilities/to_store_inventory.gd" id="8_l3fuu"]
 [ext_resource type="Script" path="res://scripts/utilities/robot_inventory.gd" id="8_sp67x"]
 [ext_resource type="PackedScene" uid="uid://kqpbfpqqvxke" path="res://scenes/last_stand.tscn" id="9_sy0o7"]
 
@@ -43,6 +44,7 @@ script = ExtResource("5_tdjnv")
 
 [node name="PreferredItemPrompt" parent="." instance=ExtResource("6_r6vhc")]
 visible = false
+z_index = 98
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -289,6 +291,91 @@ offset_right = 784.0
 offset_bottom = 149.0
 text = "X"
 
+[node name="ToStoreInventory" type="Control" parent="."]
+visible = false
+z_index = 98
+custom_minimum_size = Vector2(1152, 648)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("8_l3fuu")
+
+[node name="ColorRect2" type="ColorRect" parent="ToStoreInventory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -123.0
+offset_top = -216.0
+offset_right = 123.0
+offset_bottom = 304.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.4, 1)
+color = Color(7.31587e-05, 0.539619, 0.947246, 1)
+
+[node name="AvailableItems" type="ItemList" parent="ToStoreInventory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -162.0
+offset_right = 202.0
+offset_bottom = 259.0
+grow_horizontal = 2
+grow_vertical = 2
+icon_scale = 4.0
+
+[node name="PlaceLabel" type="Label" parent="ToStoreInventory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -197.0
+offset_right = 111.0
+offset_bottom = -174.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Robot Inventory"
+
+[node name="Select" type="Button" parent="ToStoreInventory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 14.0
+offset_top = 266.0
+offset_right = 83.0
+offset_bottom = 297.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Select"
+
+[node name="Close" type="Button" parent="ToStoreInventory"]
+layout_mode = 0
+offset_left = 766.0
+offset_top = 118.0
+offset_right = 784.0
+offset_bottom = 149.0
+text = "X"
+
 [node name="LastStand" parent="." instance=ExtResource("9_sy0o7")]
 position = Vector2(432, 290)
 scale = Vector2(3, 3)
@@ -300,9 +387,11 @@ scale = Vector2(3, 3)
 [connection signal="pressed" from="PlayerInventory/HBoxContainer/Buttons/VBoxContainer/Left" to="PlayerInventory" method="_on_left_pressed"]
 [connection signal="pressed" from="RobotInventory/TakeAll" to="RobotInventory" method="_on_take_all_pressed"]
 [connection signal="pressed" from="RobotInventory/Close" to="RobotInventory" method="_on_close_pressed"]
-[connection signal="open_inventory" from="LastStand/Middle Table/TableTop" to="RobotInventory" method="_on_table_top_open_inventory"]
-[connection signal="open_inventory" from="LastStand/Middle Table/TableMid" to="RobotInventory" method="_on_table_mid_open_inventory"]
-[connection signal="open_inventory" from="LastStand/Middle Table/TableBottom" to="RobotInventory" method="_on_table_bottom_open_inventory"]
+[connection signal="pressed" from="ToStoreInventory/Select" to="ToStoreInventory" method="_on_select_pressed"]
+[connection signal="pressed" from="ToStoreInventory/Close" to="ToStoreInventory" method="_on_close_pressed"]
+[connection signal="open_inventory" from="LastStand/Middle Table/TableTop" to="ToStoreInventory" method="_on_table_top_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Middle Table/TableMid" to="ToStoreInventory" method="_on_table_mid_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Middle Table/TableBottom" to="ToStoreInventory" method="_on_table_bottom_open_inventory"]
 
 [editable path="LastStand"]
 [editable path="LastStand/Base Left Stall/Stall0"]
