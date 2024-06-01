@@ -2,6 +2,8 @@ extends Control
 
 @onready var robot_items = $RobotItems
 @onready var take_all = $TakeAll
+@onready var robot_label = $RobotLabel
+
 
 var counter = 0
 # Called when the node enters the scene tree for the first time.
@@ -38,3 +40,19 @@ func _on_take_all_pressed():
 func _on_close_pressed():
 	self.visible = false
 	robot_items.clear()
+
+
+func _on_table_top_open_inventory():
+	show_inventory("Table - Top")
+
+
+func _on_table_mid_open_inventory():
+	show_inventory("Table - Mid")
+
+func _on_table_bottom_open_inventory():
+	show_inventory("Table - Bottom")
+
+func show_inventory(place):
+	robot_label.text = "Select Item for "+place
+	take_all.text = "Select"
+	self.visible = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dx02j6xpcmpt"]
+[gd_scene load_steps=10 format=3 uid="uid://dx02j6xpcmpt"]
 
 [ext_resource type="Script" path="res://scripts/store.gd" id="1_4gbnj"]
 [ext_resource type="PackedScene" uid="uid://d1os340hnr1fo" path="res://scenes/hud.tscn" id="2_m17yu"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dm15xlj34g63w" path="res://scenes/preferred_item_prompt.tscn" id="6_r6vhc"]
 [ext_resource type="Script" path="res://scripts/utilities/player_inventory.gd" id="7_rl0n4"]
 [ext_resource type="Script" path="res://scripts/utilities/robot_inventory.gd" id="8_sp67x"]
+[ext_resource type="PackedScene" uid="uid://kqpbfpqqvxke" path="res://scenes/last_stand.tscn" id="9_sy0o7"]
 
 [node name="Store" type="Node2D"]
 script = ExtResource("1_4gbnj")
@@ -54,6 +55,7 @@ grow_vertical = 1
 
 [node name="PlayerInventory" type="Control" parent="."]
 visible = false
+z_index = 98
 custom_minimum_size = Vector2(1152, 648)
 layout_mode = 3
 anchors_preset = 15
@@ -204,6 +206,7 @@ icon_scale = 4.0
 
 [node name="RobotInventory" type="Control" parent="."]
 visible = false
+z_index = 98
 custom_minimum_size = Vector2(1152, 648)
 layout_mode = 3
 anchors_preset = 15
@@ -286,6 +289,10 @@ offset_right = 784.0
 offset_bottom = 149.0
 text = "X"
 
+[node name="LastStand" parent="." instance=ExtResource("9_sy0o7")]
+position = Vector2(432, 290)
+scale = Vector2(3, 3)
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pref_changed" from="PreferredItemPrompt" to="." method="_on_preferred_item_prompt_pref_changed"]
 [connection signal="pressed" from="PlayerInventory/Close" to="PlayerInventory" method="_on_close_pressed"]
@@ -293,3 +300,9 @@ text = "X"
 [connection signal="pressed" from="PlayerInventory/HBoxContainer/Buttons/VBoxContainer/Left" to="PlayerInventory" method="_on_left_pressed"]
 [connection signal="pressed" from="RobotInventory/TakeAll" to="RobotInventory" method="_on_take_all_pressed"]
 [connection signal="pressed" from="RobotInventory/Close" to="RobotInventory" method="_on_close_pressed"]
+[connection signal="open_inventory" from="LastStand/Middle Table/TableTop" to="RobotInventory" method="_on_table_top_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Middle Table/TableMid" to="RobotInventory" method="_on_table_mid_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Middle Table/TableBottom" to="RobotInventory" method="_on_table_bottom_open_inventory"]
+
+[editable path="LastStand"]
+[editable path="LastStand/Base Left Stall/Stall0"]
