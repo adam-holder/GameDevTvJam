@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://twiydnm63mie"]
+[gd_scene load_steps=4 format=3 uid="uid://twiydnm63mie"]
 
 [ext_resource type="Texture2D" uid="uid://wabraobwxaj6" path="res://Tilemap/Sprites/roguelikeDungeon_transparent.png" id="1_deiiv"]
 [ext_resource type="Script" path="res://scripts/stall.gd" id="1_w0gu2"]
 
-[node name="Stall" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y6ahs"]
+size = Vector2(12, 4)
+
+[node name="Stall" type="StaticBody2D"]
+z_index = 1
 script = ExtResource("1_w0gu2")
 
 [node name="ReadyStall" type="Sprite2D" parent="."]
@@ -18,3 +22,7 @@ region_enabled = true
 region_rect = Rect2(68, 102, 16, 16)
 
 [node name="ItemSlot" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_y6ahs")

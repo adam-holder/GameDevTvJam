@@ -261,3 +261,5 @@ parameters/conditions/is_idle = false
 parameters/conditions/is_walking = false
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

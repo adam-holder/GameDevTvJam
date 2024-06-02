@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://kqpbfpqqvxke"]
+[gd_scene load_steps=14 format=3 uid="uid://kqpbfpqqvxke"]
 
 [ext_resource type="Script" path="res://scripts/last_stand.gd" id="1_1jbur"]
 [ext_resource type="Texture2D" uid="uid://wabraobwxaj6" path="res://Tilemap/Sprites/roguelikeDungeon_transparent.png" id="1_yiq7n"]
@@ -955,6 +955,21 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_w5ydn")
 sources/1 = SubResource("TileSetAtlasSource_swovy")
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5r2v2"]
+radius = 8.0
+height = 18.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uhy8a"]
+size = Vector2(16, 16)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b5qix"]
+radius = 8.0
+height = 18.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_le7os"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(-17, 38, -17, 123, 158, 124, 156, -12, -17, -12)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
 [node name="LastStand" type="Node2D"]
 script = ExtResource("1_1jbur")
 
@@ -1028,7 +1043,9 @@ position = Vector2(88, 8)
 [node name="Middle Table" type="Node2D" parent="."]
 position = Vector2(72, 48)
 
-[node name="TableTop" type="Sprite2D" parent="Middle Table"]
+[node name="TableTop" type="StaticBody2D" parent="Middle Table"]
+
+[node name="TableTop" type="Sprite2D" parent="Middle Table/TableTop"]
 texture = ExtResource("2_sdfy1")
 region_enabled = true
 region_rect = Rect2(102, 0, 16, 16)
@@ -1036,8 +1053,14 @@ script = ExtResource("5_at2xv")
 
 [node name="ItemSlot" type="Sprite2D" parent="Middle Table/TableTop"]
 
-[node name="TableMid" type="Sprite2D" parent="Middle Table"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Middle Table/TableTop"]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_5r2v2")
+
+[node name="TableMid" type="StaticBody2D" parent="Middle Table"]
 position = Vector2(0, 16)
+
+[node name="TableMid" type="Sprite2D" parent="Middle Table/TableMid"]
 texture = ExtResource("2_sdfy1")
 region_enabled = true
 region_rect = Rect2(85, 17, 16, 16)
@@ -1045,14 +1068,23 @@ script = ExtResource("5_at2xv")
 
 [node name="ItemSlot" type="Sprite2D" parent="Middle Table/TableMid"]
 
-[node name="TableBottom" type="Sprite2D" parent="Middle Table"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Middle Table/TableMid"]
+shape = SubResource("RectangleShape2D_uhy8a")
+
+[node name="TableBottom" type="StaticBody2D" parent="Middle Table"]
 position = Vector2(0, 32)
+
+[node name="TableBottom" type="Sprite2D" parent="Middle Table/TableBottom"]
 texture = ExtResource("2_sdfy1")
 region_enabled = true
 region_rect = Rect2(102, 34, 16, 16)
 script = ExtResource("5_at2xv")
 
 [node name="ItemSlot" type="Sprite2D" parent="Middle Table/TableBottom"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Middle Table/TableBottom"]
+position = Vector2(0, -4)
+shape = SubResource("CapsuleShape2D_b5qix")
 
 [node name="Extra Right Stall" type="Node2D" parent="."]
 
@@ -1092,3 +1124,9 @@ position = Vector2(8, 88)
 
 [node name="customer" parent="." instance=ExtResource("6_lgkbt")]
 position = Vector2(40, -8)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_le7os")
+
+[editable path="Top Stall/Stall0"]
+[editable path="customer"]
