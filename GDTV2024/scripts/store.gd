@@ -12,7 +12,6 @@ extends Node2D
 @onready var player = $PlayerController
 @onready var storage = $StorageController
 
-
 @export_category("Game Settings")
 ## Total number of days the game will go for
 @export var total_days: int = 7
@@ -35,9 +34,9 @@ var save_exists: bool = false
 var items = Items.new()
 
 var robot_items : Dictionary = {}
-
 var player_items: Dictionary = {}
 var storage_items: Dictionary = {}
+var store_items: Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -59,7 +58,6 @@ func _input(event):
 		if player_inventory.visible == true:
 			player_inventory.visible = false
 		if player_inventory.visible == false and robot_inventory.visible == false:
-			print("in here")
 			var picons : Array = []
 			var pitems : Array = []
 			var sicons : Array = []
@@ -68,12 +66,10 @@ func _input(event):
 				var name_cost: String = str(player_items[i]["name"]+" - "+str(player_items[i]["value"]))
 				pitems.append(name_cost)
 				picons.append(player_items[i]["icon"])
-			print(pitems)
 			for i in storage_items:
 				var name_cost: String = str(storage_items[i]["name"]+" - "+str(storage_items[i]["value"]))
 				sitems.append(name_cost)
 				sicons.append(player_items[i]["icon"])
-			print(sitems)
 			player_inventory.list_items(picons, pitems, sicons, sitems)
 	if event.is_action_pressed("ui_cancel"):
 		if player_inventory.visible == true:
@@ -106,7 +102,6 @@ func morning_phase():
 				inventory.append(name_cost)
 				inventory_icons.append(robot_items[i]["icon"])
 			robot_inventory.list_items(inventory_icons,inventory)
-			print("robot: ",inventory_icons, inventory)
 			player.add_from_robot(robot.robot_items)
 			player_items = player.item_inventory
 		elif day == 2:
@@ -160,7 +155,6 @@ func _on_button_pressed():
 
 func set_day_favorite_type():
 	day_favorite = items.item_types.pick_random()
-	print("day favorite set to "+day_favorite)
 	hud.select_announcement(day_favorite)
 
 func inv_to_storage():
@@ -201,4 +195,8 @@ func ending(type):
 
 func _on_preferred_item_prompt_pref_changed(pref):
 	item_pref = pref
-	print(item_pref)
+
+
+func _on_to_store_inventory_item_assigned(key, node, item):
+	store_items[node] = item
+	player.send_to_storage(key) #remove item from inventory & adjust keys

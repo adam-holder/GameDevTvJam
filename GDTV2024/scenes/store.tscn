@@ -314,10 +314,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -123.0
-offset_top = -216.0
-offset_right = 123.0
-offset_bottom = 304.0
+offset_left = -293.0
+offset_top = -215.0
+offset_right = 207.0
+offset_bottom = 305.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.4, 1)
@@ -330,10 +330,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -98.0
-offset_top = -162.0
-offset_right = 202.0
-offset_bottom = 259.0
+offset_left = -271.0
+offset_top = -168.0
+offset_right = 29.0
+offset_bottom = 253.0
 grow_horizontal = 2
 grow_vertical = 2
 icon_scale = 4.0
@@ -345,36 +345,99 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -14.0
-offset_top = -197.0
-offset_right = 111.0
-offset_bottom = -174.0
+offset_left = 3.0
+offset_top = -202.0
+offset_right = 128.0
+offset_bottom = -179.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Robot Inventory"
+text = "PlaceLabel"
 
-[node name="Select" type="Button" parent="ToStoreInventory"]
+[node name="Close" type="Button" parent="ToStoreInventory"]
+layout_mode = 0
+offset_left = 947.0
+offset_top = 118.0
+offset_right = 965.0
+offset_bottom = 149.0
+text = "X"
+
+[node name="ItemNameLabel" type="Label" parent="ToStoreInventory"]
+layout_mode = 0
+offset_left = 656.0
+offset_top = 273.0
+offset_right = 906.0
+offset_bottom = 296.0
+autowrap_mode = 3
+
+[node name="ItemValueLabel" type="Label" parent="ToStoreInventory"]
+layout_mode = 0
+offset_left = 909.0
+offset_top = 273.0
+offset_right = 949.0
+offset_bottom = 296.0
+
+[node name="ItemDescLabel" type="Label" parent="ToStoreInventory"]
+layout_mode = 0
+offset_left = 656.0
+offset_top = 331.0
+offset_right = 956.0
+offset_bottom = 354.0
+autowrap_mode = 3
+
+[node name="SellPrice" type="SpinBox" parent="ToStoreInventory"]
+layout_mode = 0
+offset_left = 779.0
+offset_top = 409.0
+offset_right = 862.063
+offset_bottom = 440.0
+max_value = 9999.0
+
+[node name="SellLabel" type="Label" parent="ToStoreInventory"]
+layout_mode = 0
+offset_left = 707.0
+offset_top = 412.0
+offset_right = 768.0
+offset_bottom = 435.0
+text = "Sell For:"
+
+[node name="SellButton" type="Button" parent="ToStoreInventory"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 14.0
-offset_top = 266.0
-offset_right = 83.0
-offset_bottom = 297.0
+offset_left = 176.0
+offset_top = 179.0
+offset_right = 265.0
+offset_bottom = 210.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Select"
+text = "Place Item"
 
-[node name="Close" type="Button" parent="ToStoreInventory"]
+[node name="Up20" type="Button" parent="ToStoreInventory"]
 layout_mode = 0
-offset_left = 766.0
-offset_top = 118.0
-offset_right = 784.0
-offset_bottom = 149.0
-text = "X"
+offset_left = 864.0
+offset_top = 391.0
+offset_right = 914.0
+offset_bottom = 422.0
+text = "+20%"
+
+[node name="Down20" type="Button" parent="ToStoreInventory"]
+layout_mode = 0
+offset_left = 864.0
+offset_top = 426.0
+offset_right = 914.0
+offset_bottom = 457.0
+text = " -20%"
+
+[node name="PercentageDiffLabel" type="Label" parent="ToStoreInventory"]
+layout_mode = 0
+offset_left = 652.0
+offset_top = 448.0
+offset_right = 852.0
+offset_bottom = 471.0
+horizontal_alignment = 2
 
 [node name="LastStand" parent="." instance=ExtResource("9_sy0o7")]
 position = Vector2(432, 290)
@@ -387,11 +450,17 @@ scale = Vector2(3, 3)
 [connection signal="pressed" from="PlayerInventory/HBoxContainer/Buttons/VBoxContainer/Left" to="PlayerInventory" method="_on_left_pressed"]
 [connection signal="pressed" from="RobotInventory/TakeAll" to="RobotInventory" method="_on_take_all_pressed"]
 [connection signal="pressed" from="RobotInventory/Close" to="RobotInventory" method="_on_close_pressed"]
-[connection signal="pressed" from="ToStoreInventory/Select" to="ToStoreInventory" method="_on_select_pressed"]
+[connection signal="item_assigned" from="ToStoreInventory" to="." method="_on_to_store_inventory_item_assigned"]
+[connection signal="item_clicked" from="ToStoreInventory/AvailableItems" to="ToStoreInventory" method="_on_available_items_item_clicked"]
 [connection signal="pressed" from="ToStoreInventory/Close" to="ToStoreInventory" method="_on_close_pressed"]
-[connection signal="open_inventory" from="LastStand/Middle Table/TableTop" to="ToStoreInventory" method="_on_table_top_open_inventory"]
-[connection signal="open_inventory" from="LastStand/Middle Table/TableMid" to="ToStoreInventory" method="_on_table_mid_open_inventory"]
-[connection signal="open_inventory" from="LastStand/Middle Table/TableBottom" to="ToStoreInventory" method="_on_table_bottom_open_inventory"]
+[connection signal="pressed" from="ToStoreInventory/SellButton" to="ToStoreInventory" method="_on_sell_button_pressed"]
+[connection signal="pressed" from="ToStoreInventory/Up20" to="ToStoreInventory" method="_on_up_20_pressed"]
+[connection signal="pressed" from="ToStoreInventory/Down20" to="ToStoreInventory" method="_on_down_20_pressed"]
+[connection signal="open_inventory" from="LastStand/Middle Table/TableTop/TableTop" to="ToStoreInventory" method="_on_table_top_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Middle Table/TableMid/TableMid" to="ToStoreInventory" method="_on_table_mid_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Middle Table/TableBottom/TableBottom" to="ToStoreInventory" method="_on_table_bottom_open_inventory"]
 
 [editable path="LastStand"]
 [editable path="LastStand/Base Left Stall/Stall0"]
+[editable path="LastStand/Top Stall/Stall0"]
+[editable path="LastStand/customer"]
