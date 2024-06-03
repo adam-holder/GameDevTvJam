@@ -1,10 +1,11 @@
-[gd_scene load_steps=29 format=3 uid="uid://kqpbfpqqvxke"]
+[gd_scene load_steps=31 format=3 uid="uid://kqpbfpqqvxke"]
 
 [ext_resource type="Script" path="res://scripts/last_stand.gd" id="1_1jbur"]
 [ext_resource type="Texture2D" uid="uid://wabraobwxaj6" path="res://Tilemap/Sprites/roguelikeDungeon_transparent.png" id="1_yiq7n"]
 [ext_resource type="Texture2D" uid="uid://boemba1v1lih2" path="res://Tilemap/Sprites/roguelikeIndoor_transparent.png" id="2_sdfy1"]
 [ext_resource type="PackedScene" uid="uid://twiydnm63mie" path="res://scenes/spriteScenes/Stall.tscn" id="4_ve604"]
 [ext_resource type="Script" path="res://scripts/table.gd" id="5_at2xv"]
+[ext_resource type="Script" path="res://scenes/BuyZoneTable.gd" id="6_mm64y"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_6ad5c"]
 vertices = PackedVector2Array(6, 8, -6, 8, -5, 1, 5, 1)
@@ -1091,6 +1092,9 @@ sources/1 = SubResource("TileSetAtlasSource_swovy")
 radius = 8.0
 height = 18.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8km5m"]
+size = Vector2(19, 3)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uhy8a"]
 size = Vector2(16, 16)
 
@@ -1185,6 +1189,13 @@ script = ExtResource("5_at2xv")
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_5r2v2")
 
+[node name="BuyZone" type="Area2D" parent="Middle Table/TableTop"]
+visible = false
+script = ExtResource("6_mm64y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Middle Table/TableTop/BuyZone"]
+shape = SubResource("RectangleShape2D_8km5m")
+
 [node name="TableMid" type="StaticBody2D" parent="Middle Table"]
 position = Vector2(0, 16)
 
@@ -1198,6 +1209,13 @@ script = ExtResource("5_at2xv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middle Table/TableMid"]
 shape = SubResource("RectangleShape2D_uhy8a")
+
+[node name="BuyZone" type="Area2D" parent="Middle Table/TableMid"]
+visible = false
+script = ExtResource("6_mm64y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Middle Table/TableMid/BuyZone"]
+shape = SubResource("RectangleShape2D_8km5m")
 
 [node name="TableBottom" type="StaticBody2D" parent="Middle Table"]
 position = Vector2(0, 32)
@@ -1213,6 +1231,13 @@ script = ExtResource("5_at2xv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middle Table/TableBottom"]
 position = Vector2(0, -4)
 shape = SubResource("CapsuleShape2D_b5qix")
+
+[node name="BuyZone" type="Area2D" parent="Middle Table/TableBottom"]
+visible = false
+script = ExtResource("6_mm64y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Middle Table/TableBottom/BuyZone"]
+shape = SubResource("RectangleShape2D_8km5m")
 
 [node name="Extra Right Stall" type="Node2D" parent="."]
 
@@ -1251,5 +1276,10 @@ position = Vector2(8, 72)
 position = Vector2(8, 88)
 
 [node name="navTargets" type="Node2D" parent="." groups=["navTargets"]]
+
+[node name="Exit" type="Node2D" parent="."]
+position = Vector2(-10, -50)
+
+[connection signal="body_entered" from="Middle Table/TableTop/BuyZone" to="Middle Table/TableTop/BuyZone" method="_on_body_entered"]
 
 [editable path="Top Stall/Stall0"]

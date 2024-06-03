@@ -12,8 +12,8 @@ var value: int = 0
 
 func place_item_on_table():
 	is_holding_item = true
+	$"../BuyZone".visible = true
 	## Player is no longer holding item
-
 
 func remove_item_from_table():
 	is_holding_item = false

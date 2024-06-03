@@ -5,8 +5,11 @@ extends CharacterBody2D
 
 @export var movement_speed = 80
 @export var movement_target: Node2D = null
+@onready var exit = get_node("../Exit")
 
 var nav_loaded: bool = false
+var can_leave: bool = false
+var is_leaving: bool = false
 
 func _ready():
 	#print(movement_target.position)
@@ -28,15 +31,16 @@ func set_movement_target(target_point: Vector2):
 	#print("setmove:",navigation_agent.target_position)
 
 func acquire_target():
-	print("We out here acquiring targets")
-	var stall_targets = get_tree().get_nodes_in_group("navTargets")[0]
-	print("Stall Targets",stall_targets)
-	var available_targets = stall_targets.get_children()
-	print("Available Targets",available_targets)
-	if !available_targets.is_empty():
-		var new_target = available_targets[0]
-		movement_target = new_target
-		print("TARGET POSITION",new_target.global_position,"LOCAL",new_target.position)
+	if !is_leaving:
+		print("We out here acquiring targets")
+		var stall_targets = get_tree().get_nodes_in_group("navTargets")[0]
+		print("Stall Targets",stall_targets)
+		var available_targets = stall_targets.get_children()
+		print("Available Targets",available_targets)
+		if !available_targets.is_empty():
+			var new_target = available_targets[0]
+			movement_target = new_target
+			print("TARGET POSITION",new_target.global_position,"LOCAL",new_target.position)
 	
 func _physics_process(_delta):
 
@@ -44,13 +48,19 @@ func _physics_process(_delta):
 		nav_loaded = true
 		return
 	if movement_target:
-		print("Searching for Position:",navigation_agent.target_position)
-		navigation_agent.target_position = movement_target.position
-		print("Searching for Position:",navigation_agent.target_position)
+		if !is_leaving:
+			print("Searching for Position:",navigation_agent.target_position)
+			navigation_agent.target_position = movement_target.position
+			print("Searching for Position:",navigation_agent.target_position)
+		else:
+			navigation_agent.target_position = exit.position
 
 	else:
-		print("I'm about to aquire targets")
-		acquire_target()
+		if !is_leaving:
+			print("I'm about to aquire targets")
+			acquire_target()
+		else:
+			movement_target = exit
 	if navigation_agent.is_navigation_finished():
 		return
 	
@@ -63,9 +73,26 @@ func _physics_process(_delta):
 	new_velocity = new_velocity.normalized()
 	new_velocity = new_velocity*movement_speed
 	velocity = new_velocity
-	
+	print("VELOCITY",velocity)
 	move_and_slide()
+	if !can_leave:
+		await able_to_leave()
+	await customer_leaves()
+	
+func able_to_leave():
+	if !can_leave:
+		print("making able to leave")
+		await get_tree().create_timer(5).timeout
+		can_leave = true
 
+func customer_leaves():
+	if !is_leaving:
+		print("leaving")
+		await get_tree().create_timer(10).timeout
+		is_leaving = true
+
+	
+	
 func _process(_delta):
 	if velocity != Vector2.ZERO:
 		set_walking(true)
