@@ -85,9 +85,11 @@ func morning_phase():
 	hud.change_value("day",1)
 	
 	# add any queued resources to the resource total
+	resources = 2 #upgrade not decrementing
 	resources += player.queued_resources
 	hud.resources = resources
 	player.queued_resources = 0
+	player.resources = resources
 	
 	#update store vars with controller vars
 	update_items()

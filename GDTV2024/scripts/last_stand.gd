@@ -56,7 +56,7 @@ func upgrade_stalls():
 		extra_left_stall_1.set_stall_to_ready()
 		extra_left_stall_2.set_stall_to_ready()
 		extra_left_stall_3.set_stall_to_ready()
-	if upgrade_level == 4:
+	if upgrade_level == 5:
 		## upgrade extra right
 		extra_right_stall_0.set_stall_to_ready()
 		extra_right_stall_1.set_stall_to_ready()

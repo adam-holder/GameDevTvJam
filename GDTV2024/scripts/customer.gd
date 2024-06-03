@@ -9,19 +9,21 @@ extends CharacterBody2D
 var nav_loaded: bool = false
 
 func _ready():
-	print(movement_target.position)
+	#print(movement_target.position)
+	#print(movement_target.global_position)
 	set_physics_process(false)
 	call_deferred("actor_setup")
 
 func actor_setup():
 	await get_tree().physics_frame
 	set_physics_process(true)
-	print("actorset: ",movement_target.position)
-	set_movement_target(movement_target.position)
+	#print("actorset: ",movement_target.position)
+	set_movement_target(movement_target.global_position)
+
 	
 func set_movement_target(target_point: Vector2):
 	navigation_agent.target_position = target_point
-	print("setmove:",navigation_agent.target_position)
+	#print("setmove:",navigation_agent.target_position)
 	
 func _physics_process(_delta):
 	#velocity = Vector2.ZERO
@@ -35,7 +37,7 @@ func _physics_process(_delta):
 		#velocity.y += speed
 		
 	if movement_target:
-		navigation_agent.target_position = movement_target.position
+		navigation_agent.target_position = movement_target.global_position
 	if !nav_loaded:
 		nav_loaded = true
 		return
@@ -43,13 +45,14 @@ func _physics_process(_delta):
 	if navigation_agent.is_navigation_finished():
 		return
 	
-	var current_agent_position: Vector2 = position
-	print("Pos:",position)
-	print("GlobalPos:",global_position)
+	var current_agent_position: Vector2 = global_position
+	#print("Pos:",position)
+	#print("GlobalPos:",global_position)
 
 	var next_path_position: Vector2 = navigation_agent.get_next_path_position()
-	print("Next Pos",next_path_position)
-	print("targetPos:",movement_target.position)
+	#print("Next Pos",next_path_position)
+	#print("targetPos:",movement_target.position)
+	#print("goal: ",navigation_agent.target_position)
 	
 	#velocity = current_agent_position.direction_to(next_path_position).normalized()*movement_speed
 	var new_velocity: Vector2 = next_path_position - current_agent_position

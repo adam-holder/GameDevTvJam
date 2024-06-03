@@ -1242,13 +1242,13 @@ scale = Vector2(1, -1)
 [node name="Stall0" parent="Extra Left Stall" instance=ExtResource("4_ve604")]
 position = Vector2(8, 40)
 
-[node name="Stall2" parent="Extra Left Stall" instance=ExtResource("4_ve604")]
+[node name="Stall1" parent="Extra Left Stall" instance=ExtResource("4_ve604")]
 position = Vector2(8, 56)
 
-[node name="Stall3" parent="Extra Left Stall" instance=ExtResource("4_ve604")]
+[node name="Stall2" parent="Extra Left Stall" instance=ExtResource("4_ve604")]
 position = Vector2(8, 72)
 
-[node name="Stall4" parent="Extra Left Stall" instance=ExtResource("4_ve604")]
+[node name="Stall3" parent="Extra Left Stall" instance=ExtResource("4_ve604")]
 position = Vector2(8, 88)
 
 [node name="navTarget" type="Node2D" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dx02j6xpcmpt"]
+[gd_scene load_steps=12 format=3 uid="uid://dx02j6xpcmpt"]
 
 [ext_resource type="Script" path="res://scripts/store.gd" id="1_4gbnj"]
 [ext_resource type="PackedScene" uid="uid://d1os340hnr1fo" path="res://scenes/hud.tscn" id="2_m17yu"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/utilities/to_store_inventory.gd" id="8_l3fuu"]
 [ext_resource type="Script" path="res://scripts/utilities/robot_inventory.gd" id="8_sp67x"]
 [ext_resource type="PackedScene" uid="uid://kqpbfpqqvxke" path="res://scenes/last_stand.tscn" id="9_sy0o7"]
+[ext_resource type="Script" path="res://scripts/upgrade_screen.gd" id="10_c2dgn"]
 
 [node name="Store" type="Node2D"]
 script = ExtResource("1_4gbnj")
@@ -19,18 +20,11 @@ z_index = 99
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="Label" type="Label" parent="."]
-offset_left = 459.0
-offset_top = 291.0
-offset_right = 665.0
-offset_bottom = 314.0
-text = "Main game stuff goes here"
-
 [node name="Button" type="Button" parent="."]
-offset_left = 517.0
-offset_top = 333.0
-offset_right = 604.0
-offset_bottom = 364.0
+offset_left = 203.0
+offset_top = 109.0
+offset_right = 301.0
+offset_bottom = 140.0
 text = "Test Button"
 
 [node name="RobotController" type="Node2D" parent="."]
@@ -439,6 +433,98 @@ offset_right = 852.0
 offset_bottom = 471.0
 horizontal_alignment = 2
 
+[node name="UpgradeScreen" type="Control" parent="."]
+visible = false
+z_index = 98
+layout_mode = 3
+anchors_preset = 0
+offset_left = 576.0
+offset_top = 285.0
+offset_right = 616.0
+offset_bottom = 325.0
+script = ExtResource("10_c2dgn")
+
+[node name="ColorRect2" type="ColorRect" parent="UpgradeScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -123.0
+offset_top = -216.0
+offset_right = 123.0
+offset_bottom = 304.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.4, 1)
+color = Color(7.31587e-05, 0.539619, 0.947246, 1)
+
+[node name="UpgradeItems" type="ItemList" parent="UpgradeScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -162.0
+offset_right = 202.0
+offset_bottom = 223.0
+grow_horizontal = 2
+grow_vertical = 2
+auto_height = true
+item_count = 2
+icon_scale = 4.0
+item_0/text = "sdasdasd"
+item_1/text = "Stall Upgrade LVL 2 - 50 Resources"
+
+[node name="UpgradeLabel" type="Label" parent="UpgradeScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = -200.0
+offset_right = 126.0
+offset_bottom = -177.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Upgrades"
+
+[node name="PurchaseLabel" type="Button" parent="UpgradeScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 14.0
+offset_top = 266.0
+offset_right = 83.0
+offset_bottom = 297.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Purchase"
+
+[node name="Close" type="Button" parent="UpgradeScreen"]
+layout_mode = 0
+offset_left = 212.0
+offset_top = -184.0
+offset_right = 230.0
+offset_bottom = -153.0
+text = "X"
+
+[node name="ResourcesLabel" type="Label" parent="UpgradeScreen"]
+layout_mode = 0
+offset_left = 111.0
+offset_top = 256.0
+offset_right = 209.0
+offset_bottom = 279.0
+text = "Resources: #"
+
 [node name="LastStand" parent="." instance=ExtResource("9_sy0o7")]
 position = Vector2(432, 290)
 scale = Vector2(3, 3)
@@ -456,6 +542,8 @@ scale = Vector2(3, 3)
 [connection signal="pressed" from="ToStoreInventory/SellButton" to="ToStoreInventory" method="_on_sell_button_pressed"]
 [connection signal="pressed" from="ToStoreInventory/Up20" to="ToStoreInventory" method="_on_up_20_pressed"]
 [connection signal="pressed" from="ToStoreInventory/Down20" to="ToStoreInventory" method="_on_down_20_pressed"]
+[connection signal="pressed" from="UpgradeScreen/PurchaseLabel" to="UpgradeScreen" method="_on_purchase_label_pressed"]
+[connection signal="pressed" from="UpgradeScreen/Close" to="UpgradeScreen" method="_on_close_pressed"]
 [connection signal="open_inventory" from="LastStand/Middle Table/TableTop/TableTop" to="ToStoreInventory" method="_on_table_top_open_inventory"]
 [connection signal="open_inventory" from="LastStand/Middle Table/TableMid/TableMid" to="ToStoreInventory" method="_on_table_mid_open_inventory"]
 [connection signal="open_inventory" from="LastStand/Middle Table/TableBottom/TableBottom" to="ToStoreInventory" method="_on_table_bottom_open_inventory"]

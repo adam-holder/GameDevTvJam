@@ -2,6 +2,8 @@ extends Node2D
 
 var item_inventory: Dictionary = {}
 var queued_resources: int = 0
+var resources: int = 2
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
