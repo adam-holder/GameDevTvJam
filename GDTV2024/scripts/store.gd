@@ -12,6 +12,12 @@ extends Node2D
 @onready var player = $PlayerController
 @onready var storage = $StorageController
 
+## Buttons
+@onready var upgrades_button = $UpgradesButton
+@onready var inventory_button = $InventoryButton
+@onready var open_button = $OpenButton
+
+
 @export_category("Game Settings")
 ## Total number of days the game will go for
 @export var total_days: int = 7
@@ -20,6 +26,7 @@ extends Node2D
 ## Times of day
 @export var times: Array = ["Morning","Afternoon","Night"]
 @export var starting_items: int = 6
+@export var storage_max: int = 6
 
 var money: int
 var resources: int
@@ -58,34 +65,28 @@ func _input(event):
 		if player_inventory.visible == true:
 			player_inventory.visible = false
 		if player_inventory.visible == false and robot_inventory.visible == false:
-			var picons : Array = []
-			var pitems : Array = []
-			var sicons : Array = []
-			var sitems : Array = []
-			for i in player_items:
-				var name_cost: String = str(player_items[i]["name"]+" - "+str(player_items[i]["value"]))
-				pitems.append(name_cost)
-				picons.append(player_items[i]["icon"])
-			for i in storage_items:
-				var name_cost: String = str(storage_items[i]["name"]+" - "+str(storage_items[i]["value"]))
-				sitems.append(name_cost)
-				sicons.append(player_items[i]["icon"])
-			player_inventory.list_items(picons, pitems, sicons, sitems)
+			send_item_list()
+			print(player_items)
+			player_inventory.visible = true
 	if event.is_action_pressed("ui_cancel"):
 		if player_inventory.visible == true:
 			player_inventory.visible = false
 		if robot_inventory.visible == true:
 			robot_inventory.visible == false
-		
+
+
 func morning_phase():
 	# update the day count
 	time = times[0]
 	hud.change_value("time",time)
 	day += 1
 	hud.change_value("day",1)
-	
+	upgrades_button.visible = true
+	inventory_button.visible = true
+	open_button.visible = true
+	player_inventory.storage_capacity = storage_max
 	# add any queued resources to the resource total
-	resources = 2 #upgrade not decrementing
+	resources = 6
 	resources += player.queued_resources
 	hud.resources = resources
 	player.queued_resources = 0
@@ -113,9 +114,13 @@ func morning_phase():
 	else: #FINAL DAY
 		pass
 
+
 func afternoon_phase():
 	time = times[1]
 	hud.change_value("time",time)
+	upgrades_button.visible = false
+	inventory_button.visible = false
+	open_button.visible = false
 	if day < total_days:
 		if day == 1:
 			pass
@@ -125,12 +130,14 @@ func afternoon_phase():
 			pass
 	else: #FINAL DAY
 		pass
-	
+
+
 func evening_phase():
 	time = times[2]
 	hud.change_value("time",time)
 	if day < total_days:
 		if day == 1:
+			melt_prompt()
 			set_day_favorite_type()
 			preferred_item_prompt.display(day_favorite)
 		elif day == 2:
@@ -145,6 +152,7 @@ func evening_phase():
 		else:
 			ending("bad")
 
+
 func _on_button_pressed():
 	#SceneManager.SwitchScene("Ending")
 	#set_day_favorite_type()
@@ -155,9 +163,11 @@ func _on_button_pressed():
 	elif time == times[2]:
 		morning_phase()
 
+
 func set_day_favorite_type():
 	day_favorite = items.item_types.pick_random()
 	hud.select_announcement(day_favorite)
+
 
 func inv_to_storage():
 	#TODO: show inventory, allow selecting multipe, add keys to array
@@ -166,7 +176,8 @@ func inv_to_storage():
 	for i in selected:
 		var sitem = player.send_to_storage(selected[i-1])
 		storage.add_item_to_storage(sitem)
-		
+
+
 func storage_to_inv():
 	#TODO: show inventory, allow selecting multipe, add keys to array
 	# on accept call this function
@@ -174,6 +185,7 @@ func storage_to_inv():
 	for i in selected:
 		var sitem = storage.send_to_inv(selected[i-1])
 		player.add_item_to_inv(sitem)
+
 
 func update_items(type = "all"):
 	if type == "all":
@@ -186,8 +198,28 @@ func update_items(type = "all"):
 		player_items = player.item_inventory
 	if type == "storage":
 		storage_items = storage.storage_items
-	
 
+
+func send_item_list():
+	var picons : Array = []
+	var pitems : Array = []
+	var sicons : Array = []
+	var sitems : Array = []
+	for i in player_items:
+		var name_cost: String = str(player_items[i]["name"]+" - "+str(player_items[i]["value"]))
+		pitems.append(name_cost)
+		picons.append(player_items[i]["icon"])
+	for i in storage_items:
+		var name_cost: String = str(storage_items[i]["name"]+" - "+str(storage_items[i]["value"]))
+		sitems.append(name_cost)
+		sicons.append(player_items[i]["icon"])
+	player_inventory.list_items(picons, pitems, sicons, sitems)
+
+func melt_prompt():
+	pass
+	#TODO: dialogue for "do you want to melt x remaining items for upgrade material?
+	#TODO: button options for melt & open inventory
+	
 func ending(type):
 	if type == "good":
 		SceneManager.SwitchScene("Ending")

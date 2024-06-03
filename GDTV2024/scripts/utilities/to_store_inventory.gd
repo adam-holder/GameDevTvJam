@@ -65,7 +65,7 @@ func _on_close_pressed():
 	self.visible = false
 	available_items.clear()
 
-
+#region --------------Stall Variables---------------------
 func _on_table_top_open_inventory(source):
 	show_inventory("Table - Top")
 	target = get_node(source)
@@ -82,6 +82,31 @@ func _on_table_bottom_open_inventory(source):
 	target = get_node(source)
 
 
+func _on_stall_0_open_inventory(node_path):
+	var stall_name = node_path.get_name(3)
+	show_inventory(stall_name+" 1")
+	target = get_node(node_path)
+	print(target)
+
+
+func _on_stall_1_open_inventory(node_path):
+	var stall_name = node_path.get_name(3)
+	show_inventory(stall_name+" 2")
+	target = get_node(node_path)
+
+
+func _on_stall_2_open_inventory(node_path):
+	var stall_name = node_path.get_name(3)
+	show_inventory(stall_name+" 3")
+	target = get_node(node_path)
+
+
+func _on_stall_3_open_inventory(node_path):
+	var stall_name = node_path.get_name(3)
+	show_inventory(stall_name+" 4")
+	target = get_node(node_path)
+
+#endregion --------------Stall Variables---------------------
 func show_inventory(place):
 	place_label.text = "Select Item for "+place
 	var player_items = store.player_items
@@ -108,6 +133,7 @@ func update_description(item_key):
 		item_value_label.text = ""
 		item_desc_label.text = ""
 		sell_price.value = 0
+		percentage_diff_label.text = ""
 
 
 func _on_available_items_item_clicked(index, at_position, mouse_button_index):
@@ -134,12 +160,20 @@ func _on_down_20_pressed():
 
 func _on_sell_button_pressed():
 	if available_items.is_anything_selected() and sell_price.value > 0:
-		target.place_item_on_table()
-		var ptarg = target.get_parent()
-		var target_icon = ptarg.find_child('ItemSlot')
-		target_icon.texture = load(store.player_items[inv_key]["icon"])
-		var item: Dictionary = {"name": store.player_items[inv_key]["name"], "value": store.player_items[inv_key]["value"], "price": sell_price.value}
-		item_assigned.emit(inv_key,str(ptarg.get_path()),item)
+		var target_icon
+		if target.name.contains("Stall"):
+			target.place_item_on_stall()
+			target_icon = target.find_child('ItemSlot')
+			target_icon.texture = load(store.player_items[inv_key]["icon"])
+			var item: Dictionary = {"name": store.player_items[inv_key]["name"], "value": store.player_items[inv_key]["value"], "price": sell_price.value}
+			item_assigned.emit(inv_key,str(target.get_path()),item)
+		if target.name.contains("Table"):
+			target.place_item_on_table()
+			var ptarg = target.get_parent()
+			target_icon = ptarg.find_child('ItemSlot')
+			target_icon.texture = load(store.player_items[inv_key]["icon"])
+			var item: Dictionary = {"name": store.player_items[inv_key]["name"], "value": store.player_items[inv_key]["value"], "price": sell_price.value}
+			item_assigned.emit(inv_key,str(ptarg.get_path()),item)
 		self.visible = false
 		available_items.clear()
 		inv_key = -1

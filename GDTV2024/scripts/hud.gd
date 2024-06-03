@@ -10,10 +10,17 @@ extends Control
 @onready var pause_screen = $PauseScreen
 @onready var robot_inventory = $"../RobotInventory"
 @onready var player_inventory = $"../PlayerInventory"
+@onready var to_store_inventory = $"../ToStoreInventory"
+@onready var upgrade_screen = $"../UpgradeScreen"
+@onready var store = $".."
+
+@onready var player_controller = $"../PlayerController"
 
 
 @export var scroll_speed: int = 500
 var paused: bool = false
+var player_items: Dictionary = {}
+
 
 var day: int:
 	set(day_num):
@@ -139,3 +146,15 @@ func change_value(change_type,amt):
 		day += amt
 	if change_type == "time":
 		time = amt
+
+
+func _on_inventory_button_pressed():
+	store.send_item_list()
+
+
+func _on_upgrades_button_pressed():
+	upgrade_screen.show_upgrades()
+
+
+func _on_open_button_pressed():
+	store.afternoon_phase()

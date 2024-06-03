@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dx02j6xpcmpt"]
+[gd_scene load_steps=13 format=3 uid="uid://dx02j6xpcmpt"]
 
 [ext_resource type="Script" path="res://scripts/store.gd" id="1_4gbnj"]
 [ext_resource type="PackedScene" uid="uid://d1os340hnr1fo" path="res://scenes/hud.tscn" id="2_m17yu"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://scripts/utilities/robot_inventory.gd" id="8_sp67x"]
 [ext_resource type="PackedScene" uid="uid://kqpbfpqqvxke" path="res://scenes/last_stand.tscn" id="9_sy0o7"]
 [ext_resource type="Script" path="res://scripts/upgrade_screen.gd" id="10_c2dgn"]
+[ext_resource type="FontFile" uid="uid://dg2aphvdwty0k" path="res://fonts/default.ttf" id="11_r12d5"]
 
 [node name="Store" type="Node2D"]
 script = ExtResource("1_4gbnj")
@@ -50,7 +51,6 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="PlayerInventory" type="Control" parent="."]
-visible = false
 z_index = 98
 custom_minimum_size = Vector2(1152, 648)
 layout_mode = 3
@@ -107,6 +107,14 @@ text = "Storage
 "
 horizontal_alignment = 1
 
+[node name="CapacityLabel" type="Label" parent="PlayerInventory"]
+layout_mode = 0
+offset_left = 831.0
+offset_top = 592.0
+offset_right = 942.0
+offset_bottom = 615.0
+text = "X/X Slots Used"
+
 [node name="Close" type="Button" parent="PlayerInventory"]
 layout_mode = 0
 offset_left = 923.0
@@ -116,6 +124,7 @@ offset_bottom = 149.0
 text = "X"
 
 [node name="Buttons" type="HBoxContainer" parent="PlayerInventory"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -525,6 +534,42 @@ offset_right = 209.0
 offset_bottom = 279.0
 text = "Resources: #"
 
+[node name="UpgradesButton" type="Button" parent="."]
+visible = false
+z_index = 97
+offset_left = 1065.0
+offset_top = 33.0
+offset_right = 1147.0
+offset_bottom = 64.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("11_r12d5")
+text = "Upgrades"
+
+[node name="InventoryButton" type="Button" parent="."]
+visible = false
+z_index = 97
+offset_left = 1065.0
+offset_top = 65.0
+offset_right = 1148.0
+offset_bottom = 96.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("11_r12d5")
+text = "Inventory"
+
+[node name="OpenButton" type="Button" parent="."]
+visible = false
+z_index = 97
+offset_left = 1057.0
+offset_top = 97.0
+offset_right = 1148.0
+offset_bottom = 123.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("11_r12d5")
+text = "Open Stand"
+
 [node name="LastStand" parent="." instance=ExtResource("9_sy0o7")]
 position = Vector2(432, 290)
 scale = Vector2(3, 3)
@@ -544,9 +589,31 @@ scale = Vector2(3, 3)
 [connection signal="pressed" from="ToStoreInventory/Down20" to="ToStoreInventory" method="_on_down_20_pressed"]
 [connection signal="pressed" from="UpgradeScreen/PurchaseLabel" to="UpgradeScreen" method="_on_purchase_label_pressed"]
 [connection signal="pressed" from="UpgradeScreen/Close" to="UpgradeScreen" method="_on_close_pressed"]
+[connection signal="pressed" from="UpgradesButton" to="HUD" method="_on_upgrades_button_pressed"]
+[connection signal="pressed" from="InventoryButton" to="HUD" method="_on_inventory_button_pressed"]
+[connection signal="pressed" from="OpenButton" to="HUD" method="_on_open_button_pressed"]
+[connection signal="open_inventory" from="LastStand/Base Left Stall/Stall0" to="ToStoreInventory" method="_on_stall_0_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Base Left Stall/Stall1" to="ToStoreInventory" method="_on_stall_1_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Base Left Stall/Stall2" to="ToStoreInventory" method="_on_stall_2_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Base Left Stall/Stall3" to="ToStoreInventory" method="_on_stall_3_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Base Right Stall/Stall0" to="ToStoreInventory" method="_on_stall_0_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Base Right Stall/Stall1" to="ToStoreInventory" method="_on_stall_1_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Base Right Stall/Stall2" to="ToStoreInventory" method="_on_stall_2_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Base Right Stall/Stall3" to="ToStoreInventory" method="_on_stall_3_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Top Stall/Stall0" to="ToStoreInventory" method="_on_stall_0_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Top Stall/Stall1" to="ToStoreInventory" method="_on_stall_1_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Top Stall/Stall2" to="ToStoreInventory" method="_on_stall_2_open_inventory"]
 [connection signal="open_inventory" from="LastStand/Middle Table/TableTop/TableTop" to="ToStoreInventory" method="_on_table_top_open_inventory"]
 [connection signal="open_inventory" from="LastStand/Middle Table/TableMid/TableMid" to="ToStoreInventory" method="_on_table_mid_open_inventory"]
 [connection signal="open_inventory" from="LastStand/Middle Table/TableBottom/TableBottom" to="ToStoreInventory" method="_on_table_bottom_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Extra Right Stall/Stall0" to="ToStoreInventory" method="_on_stall_0_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Extra Right Stall/Stall1" to="ToStoreInventory" method="_on_stall_1_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Extra Right Stall/Stall2" to="ToStoreInventory" method="_on_stall_2_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Extra Right Stall/Stall3" to="ToStoreInventory" method="_on_stall_3_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Extra Left Stall/Stall0" to="ToStoreInventory" method="_on_stall_0_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Extra Left Stall/Stall1" to="ToStoreInventory" method="_on_stall_1_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Extra Left Stall/Stall2" to="ToStoreInventory" method="_on_stall_2_open_inventory"]
+[connection signal="open_inventory" from="LastStand/Extra Left Stall/Stall3" to="ToStoreInventory" method="_on_stall_3_open_inventory"]
 
 [editable path="LastStand"]
 [editable path="LastStand/Base Left Stall/Stall0"]

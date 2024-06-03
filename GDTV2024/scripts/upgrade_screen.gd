@@ -14,9 +14,8 @@ var stall_upgrade_level: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	stall_upgrade_level = 2#last_stand.upgrade_level
+	stall_upgrade_level = last_stand.upgrade_level
 	print(stall_upgrade_level)
-	show_upgrades()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -51,6 +50,7 @@ func _on_purchase_label_pressed():
 			resources_label.text = "Resources: "+str(player_controller.resources)
 			hud.change_value("resources",-stall_upgrade_costs[upgrade])
 			last_stand.upgrade_stalls()
+			stall_upgrade_level = last_stand.upgrade_level
 			self.visible = false
 		else:
-			print("not enough money")
+			print("not enough resources")
