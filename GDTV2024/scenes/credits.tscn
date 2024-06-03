@@ -1,3 +1,55 @@
-[gd_scene format=3 uid="uid://r151c1s4nuhd"]
+[gd_scene load_steps=4 format=3 uid="uid://r151c1s4nuhd"]
 
-[node name="Credits" type="Node2D"]
+[ext_resource type="FontFile" uid="uid://dg2aphvdwty0k" path="res://fonts/default.ttf" id="1_sp7ob"]
+
+[sub_resource type="Gradient" id="Gradient_4pdqa"]
+offsets = PackedFloat32Array(0, 0.528474, 0.530752, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.192172, 0.192172, 0.192172, 1, 0.198178, 0.198178, 0.198178, 1, 0.404511, 0.404511, 0.404511, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_myjp2"]
+gradient = SubResource("Gradient_4pdqa")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 0)
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlaceholderBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_myjp2")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -634.0
+offset_top = -298.5
+offset_right = 634.0
+offset_bottom = 298.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_sp7ob")
+theme_override_font_sizes/font_size = 56
+text = "Made by Team SOCK
+RedcoatsRevolt & ChocoboDancer
+
+Assets from
+Sprites: Kenney
+SFX: GameMaster Audio
+Music: Deer Lover
+Fonts: fs10inator, BitmapMania, Typodermic
+"
+horizontal_alignment = 1

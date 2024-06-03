@@ -19,6 +19,7 @@ extends Node2D
 
 @onready var last_stand = $LastStand
 
+const BLANK = preload("res://visuals/blank.png")
 
 @export_category("Game Settings")
 ## Total number of days the game will go for
@@ -40,6 +41,7 @@ var day_favorite: String
 var day_appeal: float
 var item_pref: String
 var appeal: float = 0.0
+var items_sold:int = 0
 
 var save_exists: bool = false
 var items = Items.new()
@@ -323,6 +325,23 @@ func spawn_customer():
 	var new_customer = CUSTOMER.instantiate()
 	new_customer.position = Vector2(0,0)
 	$LastStand.add_child(new_customer)
+	items_sold = 0
+	
+func shopping():
+	if items_sold == 0:
+		for i in store_items.keys().size():
+			var chance = randf()
+			print("chance: ",chance)
+			if chance < appeal:
+				money += store_items[store_items.keys()[i]]["price"]
+				hud.change_value("money",store_items[store_items.keys()[i]]["price"])
+				print("buying "+store_items[store_items.keys()[i]]["name"])
+				print(store_items.keys()[i])
+				var node = get_node(NodePath(store_items.keys()[i]))
+				var node_icon = node.find_child("ItemSlot")
+				node_icon.texture = BLANK
+				items_sold = 1
+				break
 	
 func calculate_appeal():
 	var stock_count = float(store_items.keys().size())

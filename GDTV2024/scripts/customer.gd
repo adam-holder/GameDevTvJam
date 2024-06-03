@@ -7,9 +7,13 @@ extends CharacterBody2D
 @export var movement_target: Node2D = null
 @onready var exit = get_node("../Exit")
 
+@onready var store : Node2D
+
+
 var nav_loaded: bool = false
 var can_leave: bool = false
 var is_leaving: bool = false
+
 
 func _ready():
 	#print(movement_target.position)
@@ -24,6 +28,7 @@ func actor_setup():
 	#print("actorset: ",movement_target.position)
 	if movement_target:
 		set_movement_target(movement_target.global_position)
+	store = get_tree().get_root().get_node("Store")
 
 	
 func set_movement_target(target_point: Vector2):
@@ -83,6 +88,10 @@ func able_to_leave():
 	if !can_leave:
 		print("making able to leave")
 		await get_tree().create_timer(5).timeout
+		var can_shop = true
+		if can_shop == true:
+			store.shopping()
+			can_shop = false
 		can_leave = true
 
 func customer_leaves():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dx02j6xpcmpt"]
+[gd_scene load_steps=21 format=3 uid="uid://dx02j6xpcmpt"]
 
 [ext_resource type="Script" path="res://scripts/store.gd" id="1_4gbnj"]
 [ext_resource type="PackedScene" uid="uid://d1os340hnr1fo" path="res://scenes/hud.tscn" id="2_m17yu"]
@@ -14,6 +14,37 @@
 [ext_resource type="FontFile" uid="uid://dg2aphvdwty0k" path="res://fonts/default.ttf" id="11_r12d5"]
 [ext_resource type="PackedScene" uid="uid://bhqjka6xp05dp" path="res://scenes/utilities/UISounds.tscn" id="13_olnam"]
 [ext_resource type="AudioStream" uid="uid://30or06cidxm" path="res://audio/music/store.mp3" id="14_8c41y"]
+[ext_resource type="Script" path="res://scripts/robot.gd" id="15_prty7"]
+[ext_resource type="Texture2D" uid="uid://etl1jdy1hm0n" path="res://visuals/RobotSpriteSheet.png" id="16_axk3r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcu1d"]
+atlas = ExtResource("16_axk3r")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ylqir"]
+atlas = ExtResource("16_axk3r")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5r1p"]
+atlas = ExtResource("16_axk3r")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oan8y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcu1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ylqir")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f5r1p")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Store" type="Node2D"]
 script = ExtResource("1_4gbnj")
@@ -584,6 +615,16 @@ root_path = NodePath("..")
 stream = ExtResource("14_8c41y")
 volume_db = -6.241
 autoplay = true
+
+[node name="Robot" type="Node2D" parent="."]
+position = Vector2(748, 218)
+script = ExtResource("15_prty7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Robot"]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_oan8y")
+frame = 2
+frame_progress = 0.888483
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pref_changed" from="PreferredItemPrompt" to="." method="_on_preferred_item_prompt_pref_changed"]
