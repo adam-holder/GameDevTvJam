@@ -78,6 +78,8 @@ func _physics_process(_delta):
 	if !can_leave:
 		await able_to_leave()
 	await customer_leaves()
+	if position.distance_to(exit.position) < 20:
+		queue_free()
 	
 func able_to_leave():
 	if !can_leave:
