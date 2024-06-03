@@ -7,6 +7,7 @@ extends Control
 @onready var book = $VBoxContainer/Books
 @onready var food = $VBoxContainer/Food
 @onready var next = $VBoxContainer/Continue
+@onready var store = $".."
 
 signal pref_changed(pref)
 
@@ -65,6 +66,7 @@ func _on_food_pressed():
 
 func _on_continue_pressed():
 	self.hide()
+	store.melt_dialogue()
 
 
 func response_dialogue():

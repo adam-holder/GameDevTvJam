@@ -93,10 +93,10 @@ func morning_phase():
 	hud.change_value("day",1)
 	upgrades_button.visible = true
 	inventory_button.visible = true
+	open_button.text = "Open Stall"
 	open_button.visible = true
 	player_inventory.storage_capacity = storage_max
 	# add any queued resources to the resource total
-	resources = 6 #TODO: REMOVE
 	resources += player.queued_resources
 	hud.resources = resources
 	player.queued_resources = 0
@@ -165,12 +165,11 @@ func afternoon_phase():
 
 func evening_phase():
 	time = times[2]
-	open_button.visible = false
+	open_button.text = "Sleep"
 	hud.change_value("time",time)
 	stock_to_inv()
 	if day < total_days:
 		if day == 1:
-			melt_dialogue()
 			set_day_favorite_type()
 			preferred_item_prompt.display(day_favorite)
 		elif day == 2:
@@ -366,6 +365,9 @@ func shopping():
 				var node_icon = node.find_child("ItemSlot")
 				print(node_icon)
 				node_icon.texture = BLANK
+				print("STORE ITEMS BEFORE: ",store_items)
+				store_items.erase(store_items.keys()[i])
+				print("STORE ITEMS AFTER: ",store_items)
 				items_sold = 1
 				break
 				#TODO: send signal to customer to go home immediately

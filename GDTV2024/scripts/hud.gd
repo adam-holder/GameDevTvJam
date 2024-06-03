@@ -13,6 +13,7 @@ extends Control
 @onready var to_store_inventory = $"../ToStoreInventory"
 @onready var upgrade_screen = $"../UpgradeScreen"
 @onready var store = $".."
+@onready var preferred_item_prompt = $"../PreferredItemPrompt"
 
 @onready var player_controller = $"../PlayerController"
 
@@ -163,4 +164,6 @@ func _on_open_button_pressed():
 	elif store.time == store.times[1]:
 		store.evening_phase()
 	elif store.time == store.times[2]:
-		store.morning_phase()
+		if store.item_pref != "":
+			preferred_item_prompt.visible = false
+			store.morning_phase()

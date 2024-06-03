@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://r151c1s4nuhd"]
+[gd_scene load_steps=5 format=3 uid="uid://r151c1s4nuhd"]
 
+[ext_resource type="Script" path="res://scripts/credits.gd" id="1_7480y"]
 [ext_resource type="FontFile" uid="uid://dg2aphvdwty0k" path="res://fonts/default.ttf" id="1_sp7ob"]
 
 [sub_resource type="Gradient" id="Gradient_4pdqa"]
@@ -18,6 +19,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_7480y")
 
 [node name="PlaceholderBackground" type="TextureRect" parent="."]
 layout_mode = 1
