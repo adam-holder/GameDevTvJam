@@ -92,7 +92,7 @@ func morning_phase():
 	open_button.visible = true
 	player_inventory.storage_capacity = storage_max
 	# add any queued resources to the resource total
-	resources = 6
+	resources = 6 #TODO: REMOVE
 	resources += player.queued_resources
 	hud.resources = resources
 	player.queued_resources = 0
@@ -199,7 +199,7 @@ func storage_to_inv():
 func stock_to_inv():
 	var found: Dictionary = {}
 	var count = 0
-	for i in store_items:
+	for i in store_items: #TODO: make seperate function/move to inv or controller script?
 		print("i: ",store_items[i])
 		var itype = store_items[i]["type"]
 		var irare = store_items[i]["rarity"]
@@ -255,7 +255,7 @@ func stock_to_inv():
 	player.item_inventory.merge(found)
 	print("post append: ", player.item_inventory)
 	update_items("player")
-	send_item_list()
+	#send_item_list()
 	
 
 func update_items(type = "all"):

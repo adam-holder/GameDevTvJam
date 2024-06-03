@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dx02j6xpcmpt"]
+[gd_scene load_steps=15 format=3 uid="uid://dx02j6xpcmpt"]
 
 [ext_resource type="Script" path="res://scripts/store.gd" id="1_4gbnj"]
 [ext_resource type="PackedScene" uid="uid://d1os340hnr1fo" path="res://scenes/hud.tscn" id="2_m17yu"]
@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://kqpbfpqqvxke" path="res://scenes/last_stand.tscn" id="9_sy0o7"]
 [ext_resource type="Script" path="res://scripts/upgrade_screen.gd" id="10_c2dgn"]
 [ext_resource type="FontFile" uid="uid://dg2aphvdwty0k" path="res://fonts/default.ttf" id="11_r12d5"]
+[ext_resource type="PackedScene" uid="uid://bhqjka6xp05dp" path="res://scenes/utilities/UISounds.tscn" id="13_olnam"]
+[ext_resource type="AudioStream" uid="uid://30or06cidxm" path="res://audio/music/store.mp3" id="14_8c41y"]
 
 [node name="Store" type="Node2D"]
 script = ExtResource("1_4gbnj")
@@ -574,6 +576,14 @@ text = "Open Stand"
 [node name="LastStand" parent="." instance=ExtResource("9_sy0o7")]
 position = Vector2(432, 290)
 scale = Vector2(3, 3)
+
+[node name="UISounds" parent="." instance=ExtResource("13_olnam")]
+root_path = NodePath("..")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_8c41y")
+volume_db = -6.241
+autoplay = true
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pref_changed" from="PreferredItemPrompt" to="." method="_on_preferred_item_prompt_pref_changed"]

@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dkbgdw38xisbg"]
+[gd_scene load_steps=8 format=3 uid="uid://dkbgdw38xisbg"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_8fjil"]
 [ext_resource type="FontFile" uid="uid://dg2aphvdwty0k" path="res://fonts/default.ttf" id="2_j8mmx"]
 [ext_resource type="FontFile" uid="uid://wmrjdv4824il" path="res://fonts/robot.otf" id="3_syw5a"]
+[ext_resource type="AudioStream" uid="uid://ckon6i200xs34" path="res://audio/music/title.mp3" id="4_h1yxu"]
+[ext_resource type="PackedScene" uid="uid://bhqjka6xp05dp" path="res://scenes/utilities/UISounds.tscn" id="5_h4cvd"]
 
 [sub_resource type="Gradient" id="Gradient_4pdqa"]
 offsets = PackedFloat32Array(0, 0.528474, 0.530752, 1)
@@ -92,6 +94,13 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_syw5a")
 theme_override_font_sizes/font_size = 72
 text = "Last Stand for 24,901 Miles"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_h1yxu")
+autoplay = true
+
+[node name="UISounds" parent="." instance=ExtResource("5_h4cvd")]
+root_path = NodePath("..")
 
 [connection signal="pressed" from="ButtonContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="ButtonContainer/LoadGame" to="." method="_on_load_game_pressed"]
