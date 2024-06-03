@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dx02j6xpcmpt"]
+[gd_scene load_steps=22 format=3 uid="uid://dx02j6xpcmpt"]
 
 [ext_resource type="Script" path="res://scripts/store.gd" id="1_4gbnj"]
 [ext_resource type="PackedScene" uid="uid://d1os340hnr1fo" path="res://scenes/hud.tscn" id="2_m17yu"]
@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://30or06cidxm" path="res://audio/music/store.mp3" id="14_8c41y"]
 [ext_resource type="Script" path="res://scripts/robot.gd" id="15_prty7"]
 [ext_resource type="Texture2D" uid="uid://etl1jdy1hm0n" path="res://visuals/RobotSpriteSheet.png" id="16_axk3r"]
+[ext_resource type="FontFile" uid="uid://wmrjdv4824il" path="res://fonts/robot.otf" id="17_rbeok"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kcu1d"]
 atlas = ExtResource("16_axk3r")
@@ -626,6 +627,87 @@ sprite_frames = SubResource("SpriteFrames_oan8y")
 frame = 2
 frame_progress = 0.888483
 
+[node name="MeltPrompt" type="Control" parent="."]
+visible = false
+z_index = 97
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="MeltPrompt"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 474.0
+offset_top = 152.0
+offset_right = 720.0
+offset_bottom = 513.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.4, 1)
+color = Color(7.31587e-05, 0.539619, 0.947246, 1)
+
+[node name="Dialogue1" type="Label" parent="MeltPrompt"]
+layout_mode = 0
+offset_left = 487.0
+offset_top = 177.0
+offset_right = 811.0
+offset_bottom = 264.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("17_rbeok")
+text = "I can take your leftover items and turn them into materials which can be used to upgrade the stall!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Dialogue2" type="Label" parent="MeltPrompt"]
+layout_mode = 0
+offset_left = 487.0
+offset_top = 260.0
+offset_right = 811.0
+offset_bottom = 347.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("17_rbeok")
+text = "Currently you have X items in your inventory, and Y out of Z items in your storage."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Dialogue3" type="Label" parent="MeltPrompt"]
+layout_mode = 0
+offset_left = 487.0
+offset_top = 343.0
+offset_right = 811.0
+offset_bottom = 430.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("17_rbeok")
+text = "Would you like to manage your storage or go ahead and queue all items in your inventory for melting?"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ManageItems" type="Button" parent="MeltPrompt"]
+layout_mode = 0
+offset_left = 507.0
+offset_top = 447.0
+offset_right = 625.0
+offset_bottom = 478.0
+text = "Manage Items"
+
+[node name="MeltItems" type="Button" parent="MeltPrompt"]
+layout_mode = 0
+offset_left = 665.0
+offset_top = 447.0
+offset_right = 787.0
+offset_bottom = 478.0
+text = "Melt Inventory"
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pref_changed" from="PreferredItemPrompt" to="." method="_on_preferred_item_prompt_pref_changed"]
 [connection signal="pressed" from="PlayerInventory/Close" to="PlayerInventory" method="_on_close_pressed"]
@@ -666,6 +748,8 @@ frame_progress = 0.888483
 [connection signal="open_inventory" from="LastStand/Extra Left Stall/Stall1" to="ToStoreInventory" method="_on_stall_1_open_inventory"]
 [connection signal="open_inventory" from="LastStand/Extra Left Stall/Stall2" to="ToStoreInventory" method="_on_stall_2_open_inventory"]
 [connection signal="open_inventory" from="LastStand/Extra Left Stall/Stall3" to="ToStoreInventory" method="_on_stall_3_open_inventory"]
+[connection signal="pressed" from="MeltPrompt/ManageItems" to="." method="_on_manage_items_pressed"]
+[connection signal="pressed" from="MeltPrompt/MeltItems" to="." method="_on_melt_items_pressed"]
 
 [editable path="LastStand"]
 [editable path="LastStand/Base Left Stall/Stall0"]

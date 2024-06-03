@@ -5,6 +5,8 @@ extends Node2D
 @onready var preferred_item_prompt = $PreferredItemPrompt
 @onready var player_inventory = $PlayerInventory
 @onready var robot_inventory = $RobotInventory
+@onready var melt_prompt = $MeltPrompt
+@onready var dialogue_2 = $MeltPrompt/Dialogue2
 
 
 ## Controllers
@@ -146,7 +148,7 @@ func afternoon_phase():
 	hud.change_value("time",time)
 	upgrades_button.visible = false
 	inventory_button.visible = false
-	open_button.visible = false
+	open_button.text = "Close Stand"
 	calculate_appeal()
 	compile_targets()
 	spawn_customer()
@@ -163,11 +165,12 @@ func afternoon_phase():
 
 func evening_phase():
 	time = times[2]
+	open_button.visible = false
 	hud.change_value("time",time)
 	stock_to_inv()
 	if day < total_days:
 		if day == 1:
-			melt_prompt()
+			melt_dialogue()
 			set_day_favorite_type()
 			preferred_item_prompt.display(day_favorite)
 		elif day == 2:
@@ -306,8 +309,11 @@ func send_item_list():
 		sicons.append(player_items[i]["icon"])
 	player_inventory.list_items(picons, pitems, sicons, sitems)
 
-func melt_prompt():
-	pass
+
+func melt_dialogue():
+	dialogue_2.text = "Currently you have "+str(player_items.keys().size())+" items in your inventory, and "+str(storage_items.keys().size())+" out of "+str(storage_max)+" items in your storage."
+	melt_prompt.visible = true
+	#await get_tree().create_timer(2.0).timeout
 	#TODO: dialogue for "do you want to melt x remaining items for upgrade material?
 	#TODO: button options for melt & open inventory
 	
@@ -356,10 +362,13 @@ func shopping():
 				print("buying "+store_items[store_items.keys()[i]]["name"])
 				print(store_items.keys()[i])
 				var node = get_node(NodePath(store_items.keys()[i]))
+				print(node)
 				var node_icon = node.find_child("ItemSlot")
+				print(node_icon)
 				node_icon.texture = BLANK
 				items_sold = 1
 				break
+				#TODO: send signal to customer to go home immediately
 	
 func calculate_appeal():
 	var stock_count = float(store_items.keys().size())
@@ -385,3 +394,12 @@ func calculate_appeal():
 		appeal = 0.99
 	print(appeal)
 
+
+func _on_melt_items_pressed():
+	player.melt_items(player_items)
+	melt_prompt.visible = false
+
+
+func _on_manage_items_pressed():
+	send_item_list()
+	melt_prompt.visible = false

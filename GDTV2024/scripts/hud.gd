@@ -157,4 +157,10 @@ func _on_upgrades_button_pressed():
 
 
 func _on_open_button_pressed():
-	store.afternoon_phase()
+	#store.afternoon_phase()
+	if store.time == store.times[0]:
+		store.afternoon_phase()
+	elif store.time == store.times[1]:
+		store.evening_phase()
+	elif store.time == store.times[2]:
+		store.morning_phase()
