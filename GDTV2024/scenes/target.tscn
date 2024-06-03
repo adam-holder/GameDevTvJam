@@ -3,12 +3,14 @@
 [ext_resource type="Script" path="res://scenes/target.gd" id="1_pxt6d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sjrx3"]
-size = Vector2(14, 2)
+size = Vector2(24, 5)
 
-[node name="Target" type="Area2D"]
+[node name="Target" type="Area2D" groups=["navTargets"]]
 script = ExtResource("1_pxt6d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+modulate = Color(0.62553, 0.35129, 0.462107, 1)
 shape = SubResource("RectangleShape2D_sjrx3")
+debug_color = Color(0.670221, 0.0969978, 0.365505, 0.42)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

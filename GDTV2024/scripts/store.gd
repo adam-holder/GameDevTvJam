@@ -45,6 +45,8 @@ var player_items: Dictionary = {}
 var storage_items: Dictionary = {}
 var store_items: Dictionary = {}
 
+const TARGET = preload("res://scenes/target.tscn")
+const CUSTOMER = preload("res://scenes/customer.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if save_exists:
@@ -121,6 +123,8 @@ func afternoon_phase():
 	upgrades_button.visible = false
 	inventory_button.visible = false
 	open_button.visible = false
+	compile_targets()
+	spawn_customer()
 	if day < total_days:
 		if day == 1:
 			pass
@@ -234,6 +238,22 @@ func _on_preferred_item_prompt_pref_changed(pref):
 func _on_to_store_inventory_item_assigned(key, node, item):
 	store_items[node] = item
 	print(store_items.keys())
-	#loop
-	#Append.get_node(store_items.keys()[i]).global_position
 	player.send_to_storage(key) #remove item from inventory & adjust keys
+
+func compile_targets():
+	for k in len(store_items.keys()):
+		var target_instance = TARGET.instantiate()
+		target_instance.global_position = get_node(store_items.keys()[k]).global_position
+		print(target_instance)
+		print(target_instance.global_position)
+		var targetCollection = get_tree().get_nodes_in_group("navTargets")[0]
+		#get_node(store_items.keys()[k])
+		targetCollection.add_child(target_instance)
+		#target_instance.connect("body_entered", target_instance._on_body_entered)
+
+func spawn_customer():
+	print("I would like to talk to your manager")
+	var new_customer = CUSTOMER.instantiate()
+	new_customer.position = Vector2(0,0)
+	$LastStand.add_child(new_customer)
+	

@@ -1,12 +1,10 @@
-[gd_scene load_steps=31 format=3 uid="uid://kqpbfpqqvxke"]
+[gd_scene load_steps=29 format=3 uid="uid://kqpbfpqqvxke"]
 
 [ext_resource type="Script" path="res://scripts/last_stand.gd" id="1_1jbur"]
 [ext_resource type="Texture2D" uid="uid://wabraobwxaj6" path="res://Tilemap/Sprites/roguelikeDungeon_transparent.png" id="1_yiq7n"]
 [ext_resource type="Texture2D" uid="uid://boemba1v1lih2" path="res://Tilemap/Sprites/roguelikeIndoor_transparent.png" id="2_sdfy1"]
 [ext_resource type="PackedScene" uid="uid://twiydnm63mie" path="res://scenes/spriteScenes/Stall.tscn" id="4_ve604"]
 [ext_resource type="Script" path="res://scripts/table.gd" id="5_at2xv"]
-[ext_resource type="PackedScene" uid="uid://bwtk2q7yy60qe" path="res://scenes/customer.tscn" id="6_lgkbt"]
-[ext_resource type="PackedScene" uid="uid://csgd216pal4jo" path="res://scenes/target.tscn" id="7_3e01n"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_6ad5c"]
 vertices = PackedVector2Array(6, 8, -6, 8, -5, 1, 5, 1)
@@ -1253,17 +1251,5 @@ position = Vector2(8, 72)
 position = Vector2(8, 88)
 
 [node name="navTargets" type="Node2D" parent="." groups=["navTargets"]]
-position = Vector2(120, 88)
-
-[node name="customer" parent="." node_paths=PackedStringArray("movement_target") instance=ExtResource("6_lgkbt")]
-movement_speed = 120
-movement_target = NodePath("../navTargets")
-
-[node name="NavigationAgent2D" parent="customer" index="4"]
-debug_enabled = true
-
-[node name="Target" parent="." instance=ExtResource("7_3e01n")]
-position = Vector2(120, 88)
 
 [editable path="Top Stall/Stall0"]
-[editable path="customer"]
