@@ -56,6 +56,7 @@ offset_right = 1152.0
 offset_bottom = 648.0
 
 [node name="Button" type="Button" parent="."]
+visible = false
 offset_left = 203.0
 offset_top = 109.0
 offset_right = 301.0
