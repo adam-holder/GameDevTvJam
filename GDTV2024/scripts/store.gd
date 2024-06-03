@@ -115,8 +115,26 @@ func morning_phase():
 			player_items = player.item_inventory
 		elif day == 2:
 			robot_items = robot.generate_loot(starting_items, item_pref)
+			var inventory: Array = []
+			var inventory_icons: Array = []
+			for i in robot_items:
+				var name_cost: String = str(robot_items[i]["name"])+" - "+str(robot_items[i]["value"])
+				inventory.append(name_cost)
+				inventory_icons.append(robot_items[i]["icon"])
+			robot_inventory.list_items(inventory_icons,inventory)
+			player.add_from_robot(robot.robot_items)
+			player_items = player.item_inventory
 		else:
 			robot_items = robot.generate_loot(starting_items, item_pref)
+			var inventory: Array = []
+			var inventory_icons: Array = []
+			for i in robot_items:
+				var name_cost: String = str(robot_items[i]["name"])+" - "+str(robot_items[i]["value"])
+				inventory.append(name_cost)
+				inventory_icons.append(robot_items[i]["icon"])
+			robot_inventory.list_items(inventory_icons,inventory)
+			player.add_from_robot(robot.robot_items)
+			player_items = player.item_inventory
 	else: #FINAL DAY
 		pass
 
