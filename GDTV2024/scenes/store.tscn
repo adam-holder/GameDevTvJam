@@ -51,6 +51,7 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="PlayerInventory" type="Control" parent="."]
+visible = false
 z_index = 98
 custom_minimum_size = Vector2(1152, 648)
 layout_mode = 3
