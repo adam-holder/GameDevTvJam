@@ -201,4 +201,7 @@ func _on_preferred_item_prompt_pref_changed(pref):
 
 func _on_to_store_inventory_item_assigned(key, node, item):
 	store_items[node] = item
+	print(store_items.keys())
+	#loop
+	#Append.get_node(store_items.keys()[i]).global_position
 	player.send_to_storage(key) #remove item from inventory & adjust keys

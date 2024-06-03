@@ -3,8 +3,8 @@ extends CharacterBody2D
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var animation_tree = $AnimationTree
 
-@export var movement_speed = 100
-@export var movement_target: Node2D
+@export var movement_speed = 80
+@export var movement_target: Node2D = null
 
 var nav_loaded: bool = false
 
@@ -13,6 +13,7 @@ func _ready():
 	#print(movement_target.global_position)
 	set_physics_process(false)
 	call_deferred("actor_setup")
+
 
 func actor_setup():
 	await get_tree().physics_frame
@@ -24,37 +25,29 @@ func actor_setup():
 func set_movement_target(target_point: Vector2):
 	navigation_agent.target_position = target_point
 	#print("setmove:",navigation_agent.target_position)
+
+func acquire_target():
+	var stall_targets = get_tree().get_nodes_in_group("navTargets")[0]
+	var available_targets = stall_targets.get_children()
+	
+	if !available_targets.is_empty():
+		var new_target = available_targets[0]
+		movement_target = new_target
 	
 func _physics_process(_delta):
-	#velocity = Vector2.ZERO
-	#if Input.is_key_pressed(KEY_RIGHT):
-		#velocity.x += speed
-	#if Input.is_key_pressed(KEY_LEFT):
-		#velocity.x -= speed
-	#if Input.is_key_pressed(KEY_UP):
-		#velocity.y -= speed
-	#if Input.is_key_pressed(KEY_DOWN):
-		#velocity.y += speed
-		
-	if movement_target:
-		navigation_agent.target_position = movement_target.global_position
+
 	if !nav_loaded:
 		nav_loaded = true
 		return
-	
 	if navigation_agent.is_navigation_finished():
 		return
+	if movement_target:
+		navigation_agent.target_position = movement_target.global_position
+	else:
+		acquire_target()
 	
 	var current_agent_position: Vector2 = global_position
-	#print("Pos:",position)
-	#print("GlobalPos:",global_position)
-
 	var next_path_position: Vector2 = navigation_agent.get_next_path_position()
-	#print("Next Pos",next_path_position)
-	#print("targetPos:",movement_target.position)
-	#print("goal: ",navigation_agent.target_position)
-	
-	#velocity = current_agent_position.direction_to(next_path_position).normalized()*movement_speed
 	var new_velocity: Vector2 = next_path_position - current_agent_position
 	new_velocity = new_velocity.normalized()
 	new_velocity = new_velocity*movement_speed
