@@ -30,6 +30,7 @@ extends Node2D
 @onready var top_stall_2 = $"Top Stall/Stall2"
 #endregion ----------------Stall Variables---------------------
 var upgrade_level:int = 0
+var total_spots: int = 3
 
 func upgrade_stalls():
 	upgrade_level += 1
@@ -39,26 +40,31 @@ func upgrade_stalls():
 		base_left_stall_1.set_stall_to_ready()
 		base_left_stall_2.set_stall_to_ready()
 		base_left_stall_3.set_stall_to_ready()
+		total_spots += 4
 	if upgrade_level == 2:
 		## upgrade base right
 		base_right_stall_0.set_stall_to_ready()
 		base_right_stall_1.set_stall_to_ready()
 		base_right_stall_2.set_stall_to_ready()
 		base_right_stall_3.set_stall_to_ready()
+		total_spots += 4
 	if upgrade_level == 3:
 		## upgrade top
 		top_stall_0.set_stall_to_ready()
 		top_stall_1.set_stall_to_ready()
 		top_stall_2.set_stall_to_ready()
+		total_spots += 3
 	if upgrade_level == 4:
 		## upgrade extra left
 		extra_left_stall_0.set_stall_to_ready()
 		extra_left_stall_1.set_stall_to_ready()
 		extra_left_stall_2.set_stall_to_ready()
 		extra_left_stall_3.set_stall_to_ready()
+		total_spots += 4
 	if upgrade_level == 5:
 		## upgrade extra right
 		extra_right_stall_0.set_stall_to_ready()
 		extra_right_stall_1.set_stall_to_ready()
 		extra_right_stall_2.set_stall_to_ready()
 		extra_right_stall_3.set_stall_to_ready()
+		total_spots += 4

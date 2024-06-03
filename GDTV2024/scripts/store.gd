@@ -17,6 +17,8 @@ extends Node2D
 @onready var inventory_button = $InventoryButton
 @onready var open_button = $OpenButton
 
+@onready var last_stand = $LastStand
+
 
 @export_category("Game Settings")
 ## Total number of days the game will go for
@@ -27,6 +29,7 @@ extends Node2D
 @export var times: Array = ["Morning","Afternoon","Night"]
 @export var starting_items: int = 6
 @export var storage_max: int = 6
+@export var base_appeal: float = 0.50
 
 var money: int
 var resources: int
@@ -36,6 +39,7 @@ var payed: int
 var day_favorite: String
 var day_appeal: float
 var item_pref: String
+var appeal: float = 0.0
 
 var save_exists: bool = false
 var items = Items.new()
@@ -93,7 +97,7 @@ func morning_phase():
 	hud.resources = resources
 	player.queued_resources = 0
 	player.resources = resources
-	
+	appeal = base_appeal
 	#update store vars with controller vars
 	update_items()
 	
@@ -123,6 +127,7 @@ func afternoon_phase():
 	upgrades_button.visible = false
 	inventory_button.visible = false
 	open_button.visible = false
+	calculate_appeal()
 	compile_targets()
 	spawn_customer()
 	if day < total_days:
@@ -139,6 +144,7 @@ func afternoon_phase():
 func evening_phase():
 	time = times[2]
 	hud.change_value("time",time)
+	stock_to_inv()
 	if day < total_days:
 		if day == 1:
 			melt_prompt()
@@ -190,6 +196,67 @@ func storage_to_inv():
 		var sitem = storage.send_to_inv(selected[i-1])
 		player.add_item_to_inv(sitem)
 
+func stock_to_inv():
+	var found: Dictionary = {}
+	var count = 0
+	for i in store_items:
+		print("i: ",store_items[i])
+		var itype = store_items[i]["type"]
+		var irare = store_items[i]["rarity"]
+		if itype == "weapon":
+			if irare == "common":
+				for j in items.weapon_common:
+					if items.weapon_common[j]["name"] == store_items[i]["name"]:
+						found[player_items.keys().size()+count] = items.weapon_common[j]
+			if irare == "rare":
+				for j in items.weapon_rare:
+					if items.weapon_rare[j]["name"] == (store_items[i]["name"]):
+						found[store_items.keys().size()+count] = items.weapon_rare[j]
+		if itype == "valuable":
+			if irare == "common":
+				for j in items.valuable_common:
+					if items.valuable_common[j]["name"] == (store_items[i]["name"]):
+						found[store_items.keys().size()+count] = items.valuable_common[j]
+			if irare == "rare":
+				for j in items.valuable_rare:
+					if items.valuable_rare[j]["name"] == (store_items[i]["name"]):
+						found[store_items.keys().size()+count] = items.valuable_rare[j]
+		if itype == "med":
+			if irare == "common":
+				for j in items.med_common:
+					if items.med_common[j]["name"] == (store_items[i]["name"]):
+						found[store_items.keys().size()+count] = items.med_common[j]
+			if irare == "rare":
+				for j in items.med_rare:
+					if items.med_rare[j]["name"] == (store_items[i]["name"]):
+						found[store_items.keys().size()+count] = items.med_rare[j]
+		if itype == "book":
+			if irare == "common":
+				for j in items.book_common:
+					if items.book_common[j]["name"] == (store_items[i]["name"]):
+						found[store_items.keys().size()+count] = items.book_common[j]
+			if irare == "rare":
+				for j in items.book_rare:
+					if items.book_rare[j]["name"] == (store_items[i]["name"]):
+						found[store_items.keys().size()+count] = items.book_rare[j]
+		if itype == "food":
+			if irare == "common":
+				for j in items.food_common:
+					if items.food_common[j]["name"] == (store_items[i]["name"]):
+						found[store_items.keys().size()+count] = items.food_common[j]
+			if irare == "rare":
+				for j in items.food_rare:
+					if items.food_rare[j]["name"] == (store_items[i]["name"]):
+						found[store_items.keys().size()+count] = items.food_rare[j]
+		count += 1
+	print("found: ",found)
+	print("player inventory (store): ", player_items)
+	print("player inventory (player): ", player.item_inventory)
+	player.item_inventory.merge(found)
+	print("post append: ", player.item_inventory)
+	update_items("player")
+	send_item_list()
+	
 
 func update_items(type = "all"):
 	if type == "all":
@@ -257,3 +324,27 @@ func spawn_customer():
 	new_customer.position = Vector2(0,0)
 	$LastStand.add_child(new_customer)
 	
+func calculate_appeal():
+	var stock_count = float(store_items.keys().size())
+	var total_spots = float(last_stand.total_spots)
+	var items_appeal = stock_count/100 
+	var stocked_appeal = ((total_spots/stock_count)/total_spots)/5
+	var favorite_appeal: float = 0.0
+	if day_favorite != "":
+		var count = 0
+		for i in store_items:
+			if store_items[i]["type"] == day_favorite:
+				count+=1
+		favorite_appeal = (count/total_spots)/5
+	var rare_appeal: float = 0.0
+	var rcount = 0
+	for i in store_items:
+		if store_items[i]["rarity"] == "rare":
+			rcount += 1
+	rare_appeal = (rcount/total_spots)/10
+	var upgrades_appeal = float(last_stand.upgrade_level)/100
+	appeal += (items_appeal + stocked_appeal + upgrades_appeal + rare_appeal + favorite_appeal)
+	if appeal > 1:
+		appeal = 0.99
+	print(appeal)
+

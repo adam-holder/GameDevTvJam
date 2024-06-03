@@ -165,14 +165,14 @@ func _on_sell_button_pressed():
 			target.place_item_on_stall()
 			target_icon = target.find_child('ItemSlot')
 			target_icon.texture = load(store.player_items[inv_key]["icon"])
-			var item: Dictionary = {"name": store.player_items[inv_key]["name"], "value": store.player_items[inv_key]["value"], "price": sell_price.value}
+			var item: Dictionary = {"name": store.player_items[inv_key]["name"], "value": store.player_items[inv_key]["value"], "price": sell_price.value, "type": store.player_items[inv_key]["type"], "rarity":store.player_items[inv_key]["rarity"]}
 			item_assigned.emit(inv_key,str(target.get_path()),item)
 		if target.name.contains("Table"):
 			target.place_item_on_table()
 			var ptarg = target.get_parent()
 			target_icon = ptarg.find_child('ItemSlot')
 			target_icon.texture = load(store.player_items[inv_key]["icon"])
-			var item: Dictionary = {"name": store.player_items[inv_key]["name"], "value": store.player_items[inv_key]["value"], "price": sell_price.value}
+			var item: Dictionary = {"name": store.player_items[inv_key]["name"], "value": store.player_items[inv_key]["value"], "price": sell_price.value, "type": store.player_items[inv_key]["type"], "rarity":store.player_items[inv_key]["rarity"]}
 			item_assigned.emit(inv_key,str(ptarg.get_path()),item)
 		self.visible = false
 		available_items.clear()
